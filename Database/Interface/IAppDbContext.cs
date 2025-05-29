@@ -11,5 +11,7 @@ namespace Database.Interface
     public interface IAppDbContext
     {
         public DbSet<AppUser> Users { get; set; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

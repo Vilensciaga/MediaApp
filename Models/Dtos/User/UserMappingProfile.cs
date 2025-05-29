@@ -13,6 +13,16 @@ namespace Models.Dtos.User
         public UserMappingProfile()
         {
             CreateMap<AppUser, AppUserDto>().ReverseMap();
+
+            CreateMap<AppUser, RegisterDto>()
+                .ForMember(d => d.Username, x => x.MapFrom(s => s.UserName))
+                .ForMember(d => d.Password, x=> x.MapFrom(s=> s.PasswordHash))
+                .ReverseMap();
+
+            CreateMap<AppUser, LoginDto>()
+                .ForMember(d=> d.Username, x=> x.MapFrom(s=>s.UserName))
+                .ForMember(d => d.Password, x => x.MapFrom(s => s.PasswordHash))
+                .ReverseMap();
         }
     }
 }

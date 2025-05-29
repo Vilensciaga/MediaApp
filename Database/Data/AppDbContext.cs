@@ -17,5 +17,10 @@ namespace Database.Data
 
         public DbSet<AppUser> Users { get; set; }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
     }
 }

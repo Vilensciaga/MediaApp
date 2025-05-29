@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Models.Dtos.User
 {
-    public class AppUserDto
+    public class UserDto
     {
-        public int AppUserId { get; set; }
         public string UserName { get; set; }
-
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
+        public string Token { get; set; }
     }
 }

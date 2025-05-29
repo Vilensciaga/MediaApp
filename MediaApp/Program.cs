@@ -1,3 +1,4 @@
+using Auth.Jwt;
 using Database.Data;
 using Database.Interface;
 using DataService.Interface;
@@ -24,9 +25,21 @@ builder.Services.AddAutoMapper(typeof(UserMappingProfile));
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection") , x => x.MigrationsAssembly("Database")));
 
+builder.Services.AddScoped<ITokenService, TokenService>();
+
 //dependency injections
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAppDbContext, AppDbContext>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.AllowAnyMethod()
+        .AllowAnyHeader()
+        .WithOrigins("http://localhost:4200");
+    });
+});
+
 
 
 var app = builder.Build();
@@ -37,8 +50,10 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
+
 }
 
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
