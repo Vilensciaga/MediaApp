@@ -52,23 +52,6 @@ namespace DataService.Service
 
         }
 
-        //public async Task<bool> Authenticate(LoginDto user, AppUser existingUser)
-        //{
-        //    using var hmac = new HMACSHA512(existingUser.PasswordSalt);
-        //    var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(user.Password));
-
-        //    for(int i = 0; i<computedHash.Length; i++)
-        //    {;
-        //        if (computedHash[i] != existingUser.PasswordHash[i])
-        //        {
-        //            return false;
-        //        }
-      
-        //    }
-
-        //    return true;
-        //}
-
 
         
         public async Task<bool> UserExists(string username)
