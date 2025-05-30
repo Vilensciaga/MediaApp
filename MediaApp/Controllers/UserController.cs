@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataService.Interface;
 using MediaApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Models.Dtos.User;
@@ -34,6 +35,7 @@ namespace MediaApp.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult> GetUseByIdAsync([FromRoute] int id)
         {
             var user = await userService.GetUsersByIdAsync(id);
