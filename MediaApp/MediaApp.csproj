@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Auth\Auth.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
     <ProjectReference Include="..\DataService\DataService.csproj" />
+    <ProjectReference Include="..\Extension\Extension.csproj" />
   </ItemGroup>
 
 </Project>
