@@ -1,0 +1,26 @@
+<br>
+<br>
+<div class="container d-flex justify-content-center">
+    <div class="p-4 border rounded shadow" style="width: 300px;"> Login
+     <form #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" autocomplete="off" >
+        <input name = "username" 
+        [(ngModel)]="model.username"
+         class="form-control mr-sm-2" 
+         type="text" 
+         placeholder="Username"/>
+
+        <br>
+
+        <input name="password" 
+        [(ngModel)] = "model.password"
+         class="form-control mr-sm2" 
+         type="password" 
+         placeholder="password"/>
+
+        <br> 
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <button class="btn btn-outline-success" type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+</div>
