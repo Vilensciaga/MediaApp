@@ -1,0 +1,13 @@
+<div class="container mt-5">
+    <div style="text-align: center;">
+        <h1>Find Friends</h1>
+        <p class="lead">View Friends</p>
+        <div class="text"></div>
+        <select class="form-control">
+             <option *ngFor="let user of users" [value]="user.userName">
+            {{user.appUserId}} - {{user.userName}}
+             </option>
+        </select>
+       
+    </div>
+</div>
