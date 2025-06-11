@@ -6,6 +6,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AccountService } from '../services/account.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class NavComponent implements OnInit{
 
 currentUser$!: Observable<User|null>;
 
-constructor(private sharedServices:SharedServicesService, private accountService:AccountService)
+constructor(private sharedServices:SharedServicesService, private accountService:AccountService, private router:Router)
 {
   
 }  
@@ -26,7 +27,14 @@ constructor(private sharedServices:SharedServicesService, private accountService
 ngOnInit()
 {
   this.currentUser$ = this.accountService.currentUser$;
-  this.isUserLoggedIn();
+  this.currentUser$.subscribe({
+    next:user=>
+    {
+      //accessing the value of the observable
+      //console.log('current User:',user);
+    }
+  })
+  //this.isUserLoggedIn();
 }
 
 
@@ -34,8 +42,10 @@ ngOnInit()
 logout()
 {
   this.accountService.logout();
+  this.router.navigate(['/']);
   //this.sharedServices.updateLoginStatus(false);
 }
+
 
 
 isUserLoggedIn()

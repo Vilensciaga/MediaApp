@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/operators'
 import { User } from '../models/user';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
+import { Observable } from 'rxjs/internal/Observable';
 
 
 
@@ -15,7 +16,10 @@ baseUrl = 'https://localhost:5001/api/';
 private currentUserSource = new ReplaySubject<User | null>(1);
 currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http:HttpClient) { }
+constructor(private http:HttpClient) 
+{
+
+}
 
 login(model:any)
 {
@@ -23,10 +27,35 @@ login(model:any)
     map((response:User) =>{
       const user = response;
       if(user){
-        localStorage.setItem('user', JSON.stringify(user));
-        this.currentUserSource.next(user);
+        this.setCurrentUser(user);
       }
     })
+  );
+}
+
+register(model: any)
+{
+return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+  map((user:User )=> {
+    if(user)
+    {
+      this.setCurrentUser(user);
+    }
+
+  })
+)
+}
+
+setCurrentUser(user:User)
+{
+  localStorage.setItem('user', JSON.stringify(user));
+  this.currentUserSource.next(user);
+}
+
+isUserLoggedIn():Observable<boolean>
+{
+  return this.currentUser$.pipe(
+    map(user => !!user)
   );
 }
 
@@ -36,9 +65,5 @@ logout()
   this.currentUserSource.next(null);
 }
 
-setCurrentUser(user:User)
-{
-  this.currentUserSource.next(user);
-}
 
 }
