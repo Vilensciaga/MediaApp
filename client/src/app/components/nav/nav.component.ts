@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {CommonModule} from '@angular/common'
-import {SharedServicesService} from '../services/shared-services.service'
+import {SharedServicesService} from '../../services/shared-services.service'
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { AccountService } from '../services/account.service';
+import { AccountService } from '../../services/account.service';
 import { Observable } from 'rxjs/internal/Observable';
-import { User } from '../models/user';
-import { Router } from '@angular/router';
+import { User } from '../../models/user';
+import { Router, RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-nav',
-  imports: [FormsModule, CommonModule, NgbDropdownModule],
+  imports: [FormsModule, CommonModule, NgbDropdownModule, RouterModule],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
@@ -19,7 +19,9 @@ export class NavComponent implements OnInit{
 
 currentUser$!: Observable<User|null>;
 
-constructor(private sharedServices:SharedServicesService, private accountService:AccountService, private router:Router)
+constructor(private sharedServices:SharedServicesService,
+  private accountService:AccountService,
+  private router:Router,)
 {
   
 }  

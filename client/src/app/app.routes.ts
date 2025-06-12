@@ -1,8 +1,12 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { RegisterComponent } from './register/register.component';
-import { authGuard } from './services/authGuard';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { RegisterComponent } from './components/register/register.component';
+import { authGuard } from './services/guards/auth.guard';
+import { MemberListComponent } from './components/members/member-list/member-list.component';
+import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
+import { ListsComponent } from './components/lists/lists.component';
+import { MessagesComponent } from './components/messages/messages.component';
 
 export const routes: Routes = [
 
@@ -20,9 +24,40 @@ export const routes: Routes = [
     },
 
     {
-        path: 'home',
-        component: HomeComponent,
+        path:'',
+        runGuardsAndResolvers: 'always',
         canActivate: [authGuard],
+        children: [
+            
+            {
+                path: 'home',
+                component: HomeComponent,
+                canActivate: [authGuard],
+            },
+
+            {
+                path:'members',
+                component: MemberListComponent,
+            },
+            {
+                path: 'member/:id',
+                component: MemberDetailComponent
+            },
+            {
+                path:'lists',
+                component: ListsComponent
+            },
+            {
+                path: 'messages',
+                component: MessagesComponent
+            },
+        ]
+    },
+
+    {
+        path:'**',
+        component: HomeComponent,
+        pathMatch: 'full'
     }
 
 ];

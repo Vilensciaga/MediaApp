@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {CommonModule} from '@angular/common'
 import {FormsModule} from '@angular/forms'
 import { Router, RouterModule } from '@angular/router';
-import { AccountService } from '../services/account.service';
+import { AccountService } from '../../services/account.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   imports: [CommonModule, FormsModule, RouterModule],
@@ -12,7 +13,7 @@ import { AccountService } from '../services/account.service';
 export class RegisterComponent implements OnInit{
   model:any = {};
 
-  constructor(private accountService:AccountService, private router:Router)
+  constructor(private accountService:AccountService, private router:Router, private toastr:ToastrService)
   {
 
   }
@@ -27,13 +28,13 @@ export class RegisterComponent implements OnInit{
     this.accountService.register(this.model).subscribe({
       next: response =>{
         //console.log(response);
-        setTimeout(()=>{
+        //setTimeout(()=>{
           this.router.navigate(["/home"]);
-        }, 500)
+        //}, 500)
       },
       error: error =>
       {
-        console.log(error);
+        this.toastr.error(error.error);
       }
     });
   }
