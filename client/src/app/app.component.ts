@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { NavComponent } from "./nav/nav.component";
+import { NavComponent } from "./components/nav/nav.component";
 import { User } from './models/user';
 import { AccountService } from './services/account.service';
 

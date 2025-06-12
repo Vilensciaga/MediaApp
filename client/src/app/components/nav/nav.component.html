@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink='/'>SocialApp</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ng-container  *ngIf="(currentUser$ | async)">
+          <li class="nav-item">
+          <a class="nav-link" routerLink='/members' routerLinkActive="active">Friends</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink='/lists' routerLinkActive="active">Lists</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink='/messages' routerLinkActive="active">Messages</a>
+        </li>
+        </ng-container>
+      </ul>
+
+      <ng-container *ngIf="(currentUser$ | async)">
+        <div class="dropdown" style="transform: translateX(-80px);" ngbDropdown *ngIf="(currentUser$ | async) as user">
+        <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" ngbDropdownToggle>
+           {{user.userName | titlecase}}
+        </button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <a class="dropdown item"ngbDropdownItem>Edit Profile</a>
+          <a  class="dropdown item" ngbDropdownItem (click)="logout()">Logout</a>
+        </div>
+      </div>
+      </ng-container>
+    </div>
+  </div>
+</nav>

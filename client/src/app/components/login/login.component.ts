@@ -1,10 +1,11 @@
 import { FormsModule } from '@angular/forms';
 import {CommonModule} from '@angular/common'
-import {AccountService} from '../services/account.service'
-import {SharedServicesService} from '../services/shared-services.service'
+import {AccountService} from '../../services/account.service'
+import {SharedServicesService} from '../../services/shared-services.service'
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,10 @@ export class LoginComponent {
   registerMode:boolean = false;
   
 
-  constructor(private accountService:AccountService, private sharedServices: SharedServicesService, private router:Router)
+  constructor(private accountService:AccountService, 
+    private sharedServices: SharedServicesService, 
+    private router:Router,
+    private toastr:ToastrService)
   {
 
   }
@@ -29,9 +33,9 @@ export class LoginComponent {
     this.accountService.login(this.model).subscribe({
       next: response =>
       {
-        setTimeout(()=>{
+        //setTimeout(()=>{
           this.router.navigate(["/home"]);
-        }, 500)
+        //}, 500)
         //this.loggedIn = true;
         //this.sharedServices.updateLoginStatus(true);
         
@@ -39,6 +43,7 @@ export class LoginComponent {
       error: error =>
       {
         console.log(error);
+        this.toastr.error(error.error);
         //this.loggedIn = false;
         //this.sharedServices.updateLoginStatus(false);
 
