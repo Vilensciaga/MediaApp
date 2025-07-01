@@ -10,6 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const accountService = inject(AccountService);
   const toastrService = inject(ToastrService);
 
+  //guard to check if user is logged in, we made made a fuction to check in account service
   return accountService.isUserLoggedIn().pipe(
     //take(1),
     map(isLoggedIn=>{
@@ -19,7 +20,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       }
       else
       {
-        toastrService.error("Please login or register.");
+        //toastrService.error("Please login or register.");
         return false;
       }
     })

@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Extension
+namespace Extensions.AppExtensions
 {
     public static class ApplicationServiceExtensions
     {
@@ -26,7 +26,7 @@ namespace Extension
 
             //dependency injections
             services.AddScoped<ITokenService, TokenService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
 
             //database context for dependency injection

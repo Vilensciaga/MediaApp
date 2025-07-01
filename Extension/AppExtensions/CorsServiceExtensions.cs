@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Extension
+namespace Extensions.AppExtensions
 {
     public static class CorsServiceExtensions
     {

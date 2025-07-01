@@ -2,7 +2,7 @@ import { FormsModule } from '@angular/forms';
 import {CommonModule} from '@angular/common'
 import {AccountService} from '../../services/account.service'
 import {SharedServicesService} from '../../services/shared-services.service'
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -13,12 +13,13 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   model:any = {};
-  loggedIn!:boolean;
+  loggedIn:boolean = false;
 
   registerMode:boolean = false;
+  
   
 
   constructor(private accountService:AccountService, 
@@ -27,6 +28,24 @@ export class LoginComponent {
     private toastr:ToastrService)
   {
 
+  }
+  ngOnInit(): void {
+    this.navigateHome();
+  }
+
+  navigateHome()
+  {
+    this.accountService.isUserLoggedIn().subscribe({
+      next: response=>
+      {
+        this.loggedIn = response;
+      }
+    });
+
+    if(this.loggedIn)
+    {
+      this.router.navigate(['/home']);
+    }
   }
 
   login() {
