@@ -10,36 +10,36 @@ namespace MediaApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class UserController : ControllerBase
     {
-        private readonly IUserService userService;
+        private readonly IUserRepository userService;
         private readonly IMapper mapper;
-        public UserController(IUserService userService, IMapper mapper) 
+        public UserController(IUserRepository userService, IMapper mapper) 
         {
             this.userService = userService;
             this.mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllUsersAsync()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetAllUsersAsync()
         {
-            var users = await userService.GetAllUsersAsync();
-            var u = mapper.Map<IEnumerable<AppUserDto>>(users);
+            var users = await userService.GetAllMembersAsync();
+            //var u = mapper.Map<IEnumerable<MemberDto>>(users);
 
             if (users is null)
             {
-                return BadRequest("Database is empty");
+                return NotFound("Database is empty");
             }
 
-            return Ok(u);
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
-        [Authorize]
-        public async Task<ActionResult> GetUseByIdAsync([FromRoute] int id)
+        public async Task<ActionResult<MemberDto>> GetUseByIdAsync([FromRoute] int id)
         {
-            var user = await userService.GetUsersByIdAsync(id);
-            var u = mapper.Map<AppUserDto>(user);
+            AppUser user = await userService.GetUsersByIdAsync(id);
+            var u = mapper.Map<MemberDto>(user);
 
             if(user is null)
             {
@@ -48,6 +48,28 @@ namespace MediaApp.Controllers
 
             return Ok(u);
         }
+
+        [HttpGet("username:{username}")]
+        public async Task<ActionResult<MemberDto>> GetUserByUsernameAsync([FromRoute] string username)
+        {
+            if(username is null)
+            {
+                return BadRequest("Please enter a Username");
+            }
+
+            var user = await userService.GetMemberByUsernameAsync(username);
+
+            if(user is null)
+            {
+                return NotFound("User not found");
+            }
+
+          
+
+            return Ok(user);
+
+        }
+
         
         
     }

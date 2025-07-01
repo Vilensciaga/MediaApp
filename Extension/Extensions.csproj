@@ -14,9 +14,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Auth\Auth.csproj" />
-    <ProjectReference Include="..\DataService\DataService.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Auth\Auth.csproj" />
+		<ProjectReference Include="..\Database\Database.csproj" />
+		<ProjectReference Include="..\DataService\DataService.csproj" />
+	</ItemGroup>
 
 </Project>

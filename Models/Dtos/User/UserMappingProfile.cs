@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediaApp.Models;
+using Models.ModelExtensions;
+using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +17,17 @@ namespace Models.Dtos.User
             CreateMap<AppUser, AppUserDto>().ReverseMap();
 
             CreateMap<AppUser, RegisterDto>()
-                .ForMember(d => d.Username, x => x.MapFrom(s => s.UserName))
-                .ForMember(d => d.Password, x=> x.MapFrom(s=> s.PasswordHash))
-                .ReverseMap();
-
+                .ForMember(d => d.Password, s => s.MapFrom(x => x.PasswordHash));
             CreateMap<AppUser, LoginDto>()
-                .ForMember(d=> d.Username, x=> x.MapFrom(s=>s.UserName))
-                .ForMember(d => d.Password, x => x.MapFrom(s => s.PasswordHash))
-                .ReverseMap();
+                .ForMember(d => d.Password, s => s.MapFrom(x => x.PasswordHash));
+         
+
+            CreateMap<AppUser, MemberDto>()
+                .ForMember(d=> d.PhotoUrl, o=> o.MapFrom(s=> s.Photos.FirstOrDefault(x=> x.IsMain).Url))
+                .ForMember(d=> d.Age, o=> o.MapFrom(s=> s.DateOfBirth.CalculateAge()));
+            //our calculate age extension method, help us project to the memberdto 
+                
+            CreateMap<Photo, PhotoDto>();
         }
     }
 }

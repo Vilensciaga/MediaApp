@@ -7,6 +7,9 @@ import { MemberListComponent } from './components/members/member-list/member-lis
 import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
 import { ListsComponent } from './components/lists/lists.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { TestErrorsComponent } from './components/errors/test-errors/test-errors.component';
+import { NotFoundComponent } from './components/errors/not-found/not-found.component';
+import { ServerErrorComponent } from './components/errors/server-error/server-error.component';
 
 export const routes: Routes = [
 
@@ -24,6 +27,7 @@ export const routes: Routes = [
     },
 
     {
+        //all these paths are protected by the authGuard we created
         path:'',
         runGuardsAndResolvers: 'always',
         canActivate: [authGuard],
@@ -54,10 +58,26 @@ export const routes: Routes = [
         ]
     },
 
+
+    {
+        path: 'error',
+        component: TestErrorsComponent,
+    
+    },
+    {
+        path: 'not-found',
+        component: NotFoundComponent,
+    
+    },
+    {
+        path: 'server-error',
+        component: ServerErrorComponent,
+    
+    },
     {
         path:'**',
-        component: HomeComponent,
+        component: NotFoundComponent,
         pathMatch: 'full'
-    }
+    },
 
 ];

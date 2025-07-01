@@ -52,6 +52,8 @@ setCurrentUser(user:User)
   this.currentUserSource.next(user);
 }
 
+
+//checks if current user is logged in and returns true or false
 isUserLoggedIn():Observable<boolean>
 {
   return this.currentUser$.pipe(

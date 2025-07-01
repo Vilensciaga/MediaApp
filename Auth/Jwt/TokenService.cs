@@ -45,6 +45,9 @@ namespace Auth.Jwt
             return await CreateToken(existingUser);
 
         }
+        /*
+         * Creates Token with claims 
+         */
         public async Task<string> CreateToken(AppUser user)
         {
             var claims = new List<Claim>

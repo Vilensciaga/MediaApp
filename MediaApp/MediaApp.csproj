@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -21,7 +21,7 @@
     <ProjectReference Include="..\Auth\Auth.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
     <ProjectReference Include="..\DataService\DataService.csproj" />
-    <ProjectReference Include="..\Extension\Extension.csproj" />
+	  <ProjectReference Include="..\Extension\Extensions.csproj" />
   </ItemGroup>
 
 </Project>

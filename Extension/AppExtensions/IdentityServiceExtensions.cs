@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Extension
+namespace Extensions.AppExtensions
 {
     public static class IdentityServiceExtensions
     {
@@ -26,7 +26,7 @@ namespace Extension
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(config["TokenKey"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };

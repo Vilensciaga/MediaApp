@@ -14,11 +14,11 @@ namespace MediaApp.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IUserService userService;
+        private readonly IUserRepository userService;
         private readonly ITokenService tokenService;
         private IMapper mapper;
 
-        public AccountController(IMapper mapper, IUserService userService, ITokenService tokenService)
+        public AccountController(IMapper mapper, IUserRepository userService, ITokenService tokenService)
         {
             this.mapper = mapper;
             this.userService = userService;
@@ -27,7 +27,7 @@ namespace MediaApp.Controllers
 
 
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterUser([FromBody] RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> RegisterUser([FromBody] RegisterDto registerDto)
         {
 
             if(registerDto == null)
@@ -35,14 +35,14 @@ namespace MediaApp.Controllers
                 return BadRequest("Field cannot be null");
             }
 
-            bool userExists = await userService.UserExists(registerDto.Username);
+            bool userExists = await userService.UserExistsAsync(registerDto.Username);
 
             if (userExists)
             {
                 return BadRequest("User already exists in database");
             }
 
-            AppUser user = await userService.RegisterUser(registerDto);
+            AppUser user = await userService.RegisterUserAsync(registerDto);
 
             //RegisterDto dto =mapper.Map<RegisterDto>(user);
 
@@ -59,7 +59,7 @@ namespace MediaApp.Controllers
 
 
         [HttpPost("login")]
-        public async Task<ActionResult> Login(LoginDto user)
+        public async Task<ActionResult<UserDto>> Login(LoginDto user)
         {
             if(user == null)
             {
@@ -67,18 +67,18 @@ namespace MediaApp.Controllers
             }
 
 
-            AppUser existingUser = await userService.GetUserbyUsername(user.Username);
+            AppUser existingUser = await userService.GetUserbyUsernameAsync(user.Username);
 
             if(existingUser == null)
             {
-                return BadRequest("Invalid username or password.");
+                return Unauthorized("Invalid username or password.");
             }
 
             string token = await tokenService.Authenticate(existingUser, user);
 
             if(token == null)
             {
-                return BadRequest("Invalid Username or Password.");
+                return Unauthorized("Invalid Username or Password.");
             }
 
             UserDto dto = new UserDto
