@@ -44,7 +44,7 @@ export const routes: Routes = [
                 component: MemberListComponent,
             },
             {
-                path: 'member/:id',
+                path: 'members/:username',
                 component: MemberDetailComponent
             },
             {

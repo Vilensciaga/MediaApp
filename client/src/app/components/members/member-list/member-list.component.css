@@ -1,0 +1,8 @@
+.row {
+  --bs-gutter-x: 2rem;
+  --bs-gutter-y: 2;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(4 * var(--bs-gutter-x));
+  margin-right: calc(4 * var(--bs-gutter-x));
+}

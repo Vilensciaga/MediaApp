@@ -10,6 +10,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   /*
   Intecept http errors with a switch and perform actions accordingly
+  will register it in app.config.ts
   */
 
   return next(req).pipe(

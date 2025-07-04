@@ -35,7 +35,7 @@ namespace MediaApp.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id:{id}")]
         public async Task<ActionResult<MemberDto>> GetUseByIdAsync([FromRoute] int id)
         {
             AppUser user = await userService.GetUsersByIdAsync(id);
@@ -49,7 +49,7 @@ namespace MediaApp.Controllers
             return Ok(u);
         }
 
-        [HttpGet("username:{username}")]
+        [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUserByUsernameAsync([FromRoute] string username)
         {
             if(username is null)
