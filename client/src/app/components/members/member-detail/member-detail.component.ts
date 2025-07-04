@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Member } from '../../../models/member';
 import { MembersService } from '../../../services/members.service';
 import { ActivatedRoute } from '@angular/router';
-import {CommonModule} from '@angular/common'
-
+import {CommonModule} from '@angular/common';
 @Component({
   selector: 'app-member-detail',
   imports: [CommonModule],
