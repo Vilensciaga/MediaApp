@@ -1,17 +1,19 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
+import { environment } from '../../environments/environment';
+import { Member } from '../models/member';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   constructor(private http:HttpClient) { }
 
-  getUsers()
+  getUsers(headers:HttpHeaders)
   {
-    return this.http.get<User>(this.baseUrl + 'user');
+    return this.http.get<Member[]>(this.baseUrl + 'user', {headers});
   }
 }

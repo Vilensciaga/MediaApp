@@ -4,6 +4,7 @@ import {map} from 'rxjs/operators'
 import { User } from '../models/user';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 import { Observable } from 'rxjs/internal/Observable';
+import { environment } from '../../environments/environment';
 
 
 
@@ -12,7 +13,7 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class AccountService {
 
-baseUrl = 'https://localhost:5001/api/';
+baseUrl = environment.apiUrl;
 private currentUserSource = new ReplaySubject<User | null>(1);
 currentUser$ = this.currentUserSource.asObservable();
 
@@ -59,6 +60,19 @@ isUserLoggedIn():Observable<boolean>
   return this.currentUser$.pipe(
     map(user => !!user)
   );
+}
+
+getToken()
+{
+  var user = localStorage.getItem('user')?.toString();
+  if(user)
+  {
+    var userO = JSON.parse(user)
+    var token = userO.token
+    return token
+  }
+  return null;
+  
 }
 
 logout()
