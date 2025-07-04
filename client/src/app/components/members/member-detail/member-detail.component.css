@@ -1,0 +1,125 @@
+.img-thumbnail{
+    margin: 25px;
+    width: 80%;
+    height: 80%; 
+}
+
+.card-body{
+    padding: 0 15px;
+}
+
+.card-footer{
+    padding: 10px 1px;
+    background-color:  #fff;
+    border-top: none;
+    
+}
+
+
+.row {
+  --bs-gutter-x: 3rem;
+  --bs-gutter-y: 3;
+  display: flex;
+  flex-wrap: wrap;
+  height: 90vh;
+  margin-left: calc(4 * var(--bs-gutter-x));
+  margin-right: calc(5 * var(--bs-gutter-x));
+}
+
+
+
+
+
+
+
+.custom-tabs {
+  border-bottom: 2px solid mediumaquamarine;
+
+}
+
+/* Customize individual tab links */
+.custom-tabs .nav-link {
+  color: #555;
+  font-weight: bold;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+/* Active tab style */
+.custom-tabs .nav-link.active {
+  background-color: mediumaquamarine;
+  color: white;
+  border-color: transparent;
+  border-radius: 0.375rem 0.375rem 0 0;
+}
+
+.custom-tabs .nav-link:hover {
+  border-bottom: 3px solid mediumaquamarine;
+  border-left: hidden;
+  border-right: hidden;
+  border-top: hidden;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tab-panel {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.nav-tabs > li.open, .member-tabset > .nav-tabs > li:hover {
+  border-bottom: 4px solid #fbcdcf;
+}
+
+.member-tabset > .nav-tabs > li.open > a, .member-tabset > .nav-tabs > li:hover > a {
+  border: 0;
+  background: none !important;
+  color: #333333;
+}
+
+.member-tabset > .nav-tabs > li.open > a > i, .member-tabset > .nav-tabs > li:hover > a > i {
+  color: #a6a6a6;
+}
+
+.member-tabset > .nav-tabs > li.open .dropdown-menu, .member-tabset > .nav-tabs > li:hover .dropdown-menu {
+  margin-top: 0px;
+}
+
+.member-tabset > .nav-tabs > li.active {
+  border-bottom: 4px solid #E95420;
+  position: relative;
+}
+
+.member-tabset > .nav-tabs > li.active > a {
+  border: 0 !important;
+  color: #333333;
+}
+
+.member-tabset > .nav-tabs > li.active > a > i {
+  color: #404040;
+}
+
+.member-tabset > .tab-content {
+  margin-top: -3px;
+  background-color: #fff;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 15px 0;
+}
