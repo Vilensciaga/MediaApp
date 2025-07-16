@@ -134,21 +134,42 @@ namespace MediaApp.Controllers
         }
 
 
-        [HttpDelete("delete-photo")]
-        public async Task<ActionResult> DeletePhotoAsync(string publicId)
+        [HttpDelete("delete-photo/{photoId}")]
+        public async Task<ActionResult> DeletePhotoAsync(int photoId)
         {
             var username = User.GetUsername();
             AppUser user = await userService.GetUserbyUsernameAsync(username);
 
-            Photo photo = user.Photos.FirstOrDefault(x => x.PublicId == publicId);
+            Photo photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
 
-            if(photo is not null)
+            if (photo == null)
             {
-                //DeletionResult del = new
-               await photoservice.DeletePhotoAsync(publicId);
-                //probably need to also delete it from the database
+                return NotFound();
             }
-            return Ok();
+
+            if(photo.IsMain)
+            {
+                return BadRequest("Cannot delete main photo");
+            }
+
+            if(photo.PublicId != null)
+            {
+                var result = await photoservice.DeletePhotoAsync(photo.PublicId);
+                if(result.Error != null)
+                {
+                    return BadRequest(result.Error.Message);
+                }
+            }
+
+            user.Photos.Remove(photo);
+
+            if(await userService.SaveAllAsync())
+            {
+                return Ok();
+            }
+               
+            
+            return BadRequest("Failed to delete the photo.");
         }
 
 

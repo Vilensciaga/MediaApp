@@ -6,6 +6,10 @@ import { Member } from '../../../models/member';
 import { environment } from '../../../../environments/environment';
 import { AccountService } from '../../../services/userServices/account.service';
 import { MyUploader } from '../../../services/helpers/myUploader';
+import { MembersService } from '../../../services/userServices/members.service';
+import { Photo } from '../../../models/photo';
+import { User } from '../../../models/user';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-photo-editor',
@@ -18,14 +22,50 @@ export class PhotoEditorComponent implements OnInit {
 uploader!: FileUploader;
 hasBaseDropzoneOver = false;
 baseUrl = environment.apiUrl;
+user!:User | null;
 
- constructor(private accountService:AccountService) {
-
+ constructor(private accountService:AccountService, private memberService:MembersService) {
+  this.accountService.currentUser$.pipe(take(1)).subscribe({next:user=>{ this.user = user}})
   }
 
   ngOnInit(): void {
     this.initializeUploader();
   }
+
+
+
+setMainPhoto(photo:Photo)
+{
+  this.memberService.setMainPhoto(photo.id).subscribe(
+    {
+    next: response=>{
+      if(this.user){
+        this.user.photoUrl = photo.url;
+        this.accountService.setCurrentUser(this.user);
+        this.member.photoUrl = photo.url;
+        this.member.photos.forEach(p => {
+          if(p.isMain) p.isMain = false;
+          if(p.id === photo.id) p.isMain = true;
+          
+        });
+      }
+      
+    }
+  })
+}
+
+deletePhoto(photoId:number)
+{
+  this.memberService.deletePhoto(photoId).subscribe({
+    next:response=>
+    {
+      //returns an array of all the photos except the one with that id
+      this.member.photos = this.member.photos.filter(x=> x.id !== photoId);   
+    }
+  })
+}
+
+
 
   initializeUploader()
   {
@@ -61,8 +101,6 @@ baseUrl = environment.apiUrl;
   }
 
 get isUploaderHTML5(): boolean {
-  console.log('Uploader instance:', this.uploader);
-console.log('isHTML5?', (this.uploader as any).isHTML5);
   return (this.uploader as any)?.isHTML5 ?? false;
 }
 
