@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { Member } from '../../../models/member';
-import { MembersService } from '../../../services/members.service';
+import { MembersService } from '../../../services/userServices/members.service';
 import { ToastrService } from 'ngx-toastr';
 import { MemberCardComponent } from '../member-card/member-card.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-member-list',
@@ -13,7 +14,7 @@ import { MemberCardComponent } from '../member-card/member-card.component';
 })
 export class MemberListComponent implements OnInit{
 
-  members: Member[] = [];
+  members$!: Observable<Member[]>;
 
   constructor(private memberService:MembersService,
               private toastr:ToastrService
@@ -22,20 +23,7 @@ export class MemberListComponent implements OnInit{
 
   }
   ngOnInit() {
-    this.getMembers();
+    this.members$ = this.memberService.getMembers();
   }
 
-
-  getMembers()
-  {
-      this.memberService.getMembers().subscribe({
-      next: response =>{
-        this.members = response;
-      },
-      error: error =>
-      {
-        this.toastr.error(error);
-      }
-    })
-  }
 }

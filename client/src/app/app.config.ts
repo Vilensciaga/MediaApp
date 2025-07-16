@@ -8,17 +8,20 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { jwtInterceptor } from './interceptors/jwt.interceptor';
 //gallery
 import { GalleryModule } from 'ng-gallery';
+import {NgxSpinnerModule} from 'ngx-spinner';
+import { loadingInterceptor } from './interceptors/loading.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes), 
     provideHttpClient(
-      withInterceptors([errorInterceptor, jwtInterceptor]),
+      withInterceptors([errorInterceptor, jwtInterceptor, loadingInterceptor]),
     ), 
     provideToastr({positionClass: 'toast-bottom-right'}),
    provideAnimations(),
-   importProvidersFrom(GalleryModule)
+   importProvidersFrom(GalleryModule),
+   importProvidersFrom(NgxSpinnerModule),
   ],
     
     

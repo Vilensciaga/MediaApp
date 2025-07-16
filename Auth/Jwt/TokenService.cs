@@ -5,9 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Models.Dtos.User;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-
-//using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -52,7 +51,7 @@ namespace Auth.Jwt
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName)
+                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.NameId, user.UserName)
 
             };
 

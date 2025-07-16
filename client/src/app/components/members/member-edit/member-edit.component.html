@@ -1,0 +1,101 @@
+<div class="row mt-3" *ngIf="member">
+    <div class="col-4">
+        <h1>{{member.username}}'s Profile</h1>
+    </div>
+    <div class="col-8">
+        <!-- the dirty property will show the alert on form changes -->
+        <div class="alert alert-info" *ngIf="editForm.dirty">
+            <strong>Information: </strong> Unsaved changes will be lost.
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div>
+                    <strong>Location:</strong>
+                    <p>{{member.city}}, {{member.country}}</p>
+                </div>
+                <div>
+                    <strong>Age:</strong>
+                    <p>{{member.age}}</p>
+                </div>
+                <div>
+                    <strong>Last Active:</strong>
+                    <p>{{member.lastActive}}</p>
+                </div>
+                <div>
+                    <strong>Member Since:</strong>
+                    <p>{{member.createdAt}}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group d-flex">
+                        <button [disabled]="!editForm.dirty" form="editForm" class="btn btn-success btn-block">save</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div> 
+    <div class="col-8 ">
+        <div class="">
+            <nav>
+            <div class="nav nav-tabs custom-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-edit-tab" data-bs-toggle="tab" data-bs-target="#nav-edit" type="button" role="tab" aria-controls="nav-edit" aria-selected="true">Edit Profile</button>
+                <button class="nav-link" id="nav-photo-tab" data-bs-toggle="tab" data-bs-target="#nav-photo" type="button" role="tab" aria-controls="nav-photo" aria-selected="false">Edit Photos</button>
+
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab" tabindex="0">
+                
+               <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+                 <h4 class="mt-4">Description</h4>
+                <textarea [(ngModel)]="member.introduction" class='form-control' name="introduction" rows="6"></textarea>
+
+                <h4 class="mt-2">Looking For</h4>
+                <textarea [(ngModel)]="member.lookingFor" class='form-control' name="lookingFor" rows="6"></textarea>
+
+                <h4 class="mt-2">Interests</h4>
+                <textarea [(ngModel)]="member.interests" class='form-control' name="interests" rows="6"></textarea>
+
+                <h4>Location: </h4>
+
+                <div class="form-inline">
+                    <label for="city">City: </label>
+                    <input [(ngModel)]="member.city" type="text" name="city" class="form-control mx-2">
+
+                    <label for="country">Country: </label>
+                    <input [(ngModel)]="member.country" type="text" name="country" class="form-control mx-2 mb-5">
+                </div>
+               </form>
+
+                
+
+                
+            </div>
+
+
+
+
+
+
+            <div class="tab-pane fade" id="nav-photo" role="tabpanel" aria-labelledby="nav-photo-tab" tabindex="0">
+                  <!-- <gallery [items]="images" loop  bullets bulletPosition="bottom" thumbs /> -->
+                  <!-- <gallery *ngIf="galleryConfig$ | async; let config"
+               [items]="images || [] "
+               [thumbWidth]="config.thumbWidth"
+               [thumbHeight]="config.thumbHeight"
+               [thumbPosition]=" 'bottom'" thumbs/> -->
+                <app-photo-editor [member]="member"></app-photo-editor>
+            </div>
+
+
+
+
+
+        </div>
+        </div>
+    </div>
+</div>

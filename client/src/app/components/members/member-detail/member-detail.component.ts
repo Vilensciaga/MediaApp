@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Member } from '../../../models/member';
-import { MembersService } from '../../../services/members.service';
+import { MembersService } from '../../../services/userServices/members.service';
 import { ActivatedRoute } from '@angular/router';
 import {CommonModule} from '@angular/common';
 import { GalleryModule, GalleryItem, ImageItem, GalleryConfig, ThumbnailsPosition, VideoItem, YoutubeItem, IframeItem, } from 'ng-gallery';
@@ -66,6 +66,7 @@ export class MemberDetailComponent implements OnInit{
   {
     for(const photo of this.member.photos)
     {
+      console.log(this.member.photos)
       this.images.push(
         new ImageItem({
           src: photo.url,

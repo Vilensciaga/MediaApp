@@ -1,7 +1,7 @@
 import { FormsModule } from '@angular/forms';
 import {CommonModule} from '@angular/common'
-import {AccountService} from '../../services/account.service'
-import {SharedServicesService} from '../../services/shared-services.service'
+import {AccountService} from '../../services/userServices/account.service'
+import {SharedServicesService} from '../../services/sharedServices/shared-services.service'
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';

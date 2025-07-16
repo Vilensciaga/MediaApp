@@ -10,6 +10,8 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { TestErrorsComponent } from './components/errors/test-errors/test-errors.component';
 import { NotFoundComponent } from './components/errors/not-found/not-found.component';
 import { ServerErrorComponent } from './components/errors/server-error/server-error.component';
+import { MemberEditComponent } from './components/members/member-edit/member-edit.component';
+import { preventUnsavedChangesGuard } from './services/guards/prevent-unsaved-changes.guard';
 
 export const routes: Routes = [
 
@@ -46,6 +48,11 @@ export const routes: Routes = [
             {
                 path: 'members/:username',
                 component: MemberDetailComponent
+            },
+            {
+                path: 'member/edit',
+                component: MemberEditComponent,
+                canDeactivate: [preventUnsavedChangesGuard]
             },
             {
                 path:'lists',

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AccountService } from './account.service';
+import { SpinnerService } from './spinner.service';
 
-describe('AccountService', () => {
-  let service: AccountService;
+describe('SpinnerService', () => {
+  let service: SpinnerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AccountService);
+    service = TestBed.inject(SpinnerService);
   });
 
   it('should be created', () => {

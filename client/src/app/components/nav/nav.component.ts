@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {CommonModule} from '@angular/common'
-import {SharedServicesService} from '../../services/shared-services.service'
+import {SharedServicesService} from '../../services/sharedServices/shared-services.service'
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { AccountService } from '../../services/account.service';
+import { AccountService } from '../../services/userServices/account.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { User } from '../../models/user';
 import { Router, RouterModule } from '@angular/router';

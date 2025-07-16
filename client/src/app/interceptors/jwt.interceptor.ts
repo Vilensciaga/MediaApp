@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { AccountService } from '../services/account.service';
+import { AccountService } from '../services/userServices/account.service';
 import { inject } from '@angular/core';
 import { User } from '../models/user';
 import { take } from 'rxjs';

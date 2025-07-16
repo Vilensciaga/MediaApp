@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models.Models.Settings;
 
 namespace Extensions.AppExtensions
 {
@@ -33,8 +34,15 @@ namespace Extensions.AppExtensions
             services.AddTransient<IAppDbContext, AppDbContext>();
 
 
+
+
             //instanciating mapping profiles
             services.AddAutoMapper(typeof(UserMappingProfile));
+
+            //configuring our cloudinary settings
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+
+            services.AddTransient<IPhotoService, PhotoService>();
 
 
             return services;

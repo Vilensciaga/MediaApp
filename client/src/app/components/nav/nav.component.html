@@ -18,11 +18,12 @@
 
       <ng-container *ngIf="(currentUser$ | async)">
         <div class="dropdown" style="transform: translateX(-80px);" ngbDropdown *ngIf="(currentUser$ | async) as user">
+          <img src="{{user.photoUrl}}" alt="{{user.userName}}">
         <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" ngbDropdownToggle>
            {{user.userName | titlecase}}
         </button>
         <div class="dropdown-menu" ngbDropdownMenu>
-          <a class="dropdown item"ngbDropdownItem>Edit Profile</a>
+          <a class="dropdown item"ngbDropdownItem routerLink="/member/edit">Edit Profile</a>
           <a  class="dropdown item" ngbDropdownItem (click)="logout()">Logout</a>
         </div>
       </div>

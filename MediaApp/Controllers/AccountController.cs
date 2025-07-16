@@ -1,10 +1,12 @@
 ﻿using Auth.Jwt;
 using AutoMapper;
 using DataService.Interface;
+using DataService.Service;
 using MediaApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Dtos.User;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -52,8 +54,8 @@ namespace MediaApp.Controllers
                 Token = await tokenService.CreateToken(user)
             };
 
-
-            return Ok(dto);
+            //using create at route because the method to grab user by id or username is in the user controller
+            return CreatedAtRoute("GetUser", new {username = user.UserName }, dto);
 
         }
 
@@ -84,11 +86,13 @@ namespace MediaApp.Controllers
             UserDto dto = new UserDto
             {
                 UserName = existingUser.UserName,
-                Token = await tokenService.CreateToken(existingUser)
+                Token = await tokenService.CreateToken(existingUser),
+                PhotoUrl = existingUser.Photos.FirstOrDefault(x => x.IsMain)?.Url,
             };
 
             return Ok(dto);
         }
+
 
     }
 }

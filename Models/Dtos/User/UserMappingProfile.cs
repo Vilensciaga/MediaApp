@@ -28,6 +28,8 @@ namespace Models.Dtos.User
             //our calculate age extension method, help us project to the memberdto 
                 
             CreateMap<Photo, PhotoDto>();
+
+            CreateMap<UpdateMemberDto, AppUser>();
         }
     }
 }

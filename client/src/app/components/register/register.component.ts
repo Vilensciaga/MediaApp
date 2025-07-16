@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CommonModule} from '@angular/common'
 import {FormsModule} from '@angular/forms'
 import { Router, RouterModule } from '@angular/router';
-import { AccountService } from '../../services/account.service';
+import { AccountService } from '../../services/userServices/account.service';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',

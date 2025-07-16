@@ -5,6 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Models.Dtos.User;
+using System.Security.Claims;
+using Extensions.AppExtensions;
+using DataService.Service;
+using Models.Models;
+using CloudinaryDotNet.Actions;
 
 namespace MediaApp.Controllers
 {
@@ -15,10 +20,12 @@ namespace MediaApp.Controllers
     {
         private readonly IUserRepository userService;
         private readonly IMapper mapper;
-        public UserController(IUserRepository userService, IMapper mapper) 
+        private readonly IPhotoService photoservice;
+        public UserController(IUserRepository userService, IMapper mapper, IPhotoService photoservice) 
         {
             this.userService = userService;
             this.mapper = mapper;
+            this.photoservice = photoservice;
         }
 
         [HttpGet]
@@ -49,7 +56,8 @@ namespace MediaApp.Controllers
             return Ok(u);
         }
 
-        [HttpGet("{username}")]
+        //adding name to the route so i can access it in my account controller when i create a new user to return created at route 201 message
+        [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUserByUsernameAsync([FromRoute] string username)
         {
             if(username is null)
@@ -70,7 +78,104 @@ namespace MediaApp.Controllers
 
         }
 
-        
-        
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(UpdateMemberDto updateMemberDto)
+        {
+            //grabing the username from user token with this extension method
+            var username = User.GetUsername();
+
+            var user = await userService.GetUserbyUsernameAsync(username);
+
+            mapper.Map(updateMemberDto, user);
+
+            await userService.UpdateUserAsync(user);
+
+            if (await userService.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to Update");
+        }
+
+
+        [HttpPost("add-photo")]
+        public async Task<ActionResult<PhotoDto>> AddPhotoAsync(IFormFile file)
+        {
+            var username = User.GetUsername();
+            var user = await userService.GetUserbyUsernameAsync(username);
+
+            var results = await photoservice.AddPhotoAsync(file);
+
+            if(results.Error != null)
+            {
+                return BadRequest(results.Error.Message);
+            }
+
+            var photo = new Photo
+            {
+                Url = results.SecureUrl.AbsoluteUri,
+                PublicId = results.PublicId,
+            };
+
+            if(user.Photos.Count == 0)
+            {
+                photo.IsMain = true;
+            }
+
+            user.Photos.Add(photo);
+
+            if(await userService.SaveAllAsync())
+            {
+                // we could use create at route if we dont have a method in this controller to grab a user by or username
+                //returns a 201 because we created something
+                return CreatedAtAction(nameof(GetUserByUsernameAsync), new {username = user.UserName}, mapper.Map<PhotoDto>(photo));
+            }
+
+            return BadRequest("Issues encountered uploading the photo");
+        }
+
+
+        [HttpDelete("delete-photo")]
+        public async Task<ActionResult> DeletePhotoAsync(string publicId)
+        {
+            var username = User.GetUsername();
+            AppUser user = await userService.GetUserbyUsernameAsync(username);
+
+            Photo photo = user.Photos.FirstOrDefault(x => x.PublicId == publicId);
+
+            if(photo is not null)
+            {
+                //DeletionResult del = new
+               await photoservice.DeletePhotoAsync(publicId);
+                //probably need to also delete it from the database
+            }
+            return Ok();
+        }
+
+
+        [HttpPut("set-main-photo/{photoId}")]
+        public async Task<ActionResult> SetMainPhoto(int photoId)
+        {
+            var user = await userService.GetUserbyUsernameAsync(User.GetUsername());
+            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+            if (photo.IsMain) return BadRequest("This is already the main photo");
+
+            var currentMain = user.Photos.FirstOrDefault(x => x.IsMain);
+
+            if(currentMain != null)
+            {
+                currentMain.IsMain = false;
+                photo.IsMain = true;
+            }
+
+            if (await userService.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to set main photo");
+
+
+        }
+
+
+
     }
 }
