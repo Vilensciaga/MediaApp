@@ -13,7 +13,7 @@ using System.Text;
 namespace MediaApp.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController] 
+    [ApiController]  
     public class AccountController : ControllerBase
     {
         private readonly IUserRepository userService;
