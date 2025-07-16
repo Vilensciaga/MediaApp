@@ -44,7 +44,7 @@ namespace MediaApp.Controllers
                 return BadRequest("User already exists in database");
             }
 
-            AppUser user = await userService.RegisterUserAsync(registerDto);S
+            AppUser user = await userService.RegisterUserAsync(registerDto);
 
             UserDto dto = new UserDto
             {
