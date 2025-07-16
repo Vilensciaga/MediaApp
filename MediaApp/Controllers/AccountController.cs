@@ -52,7 +52,7 @@ namespace MediaApp.Controllers
                 Token = await tokenService.CreateToken(user)
             };
 
-            //using create at route because the method to grab user by id or username is in the user controller
+            //using create at route because the method to grab user by id or username is in the user controller 
             return CreatedAtRoute("GetUser", new {username = user.UserName }, dto);
 
         }
