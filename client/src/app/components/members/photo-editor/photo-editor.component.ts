@@ -10,6 +10,7 @@ import { MembersService } from '../../../services/userServices/members.service';
 import { Photo } from '../../../models/photo';
 import { User } from '../../../models/user';
 import { take } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-photo-editor',
@@ -24,7 +25,9 @@ hasBaseDropzoneOver = false;
 baseUrl = environment.apiUrl;
 user!:User | null;
 
- constructor(private accountService:AccountService, private memberService:MembersService) {
+ constructor(private accountService:AccountService,
+   private memberService:MembersService,
+  private toastr:ToastrService) {
   this.accountService.currentUser$.pipe(take(1)).subscribe({next:user=>{ this.user = user}})
   }
 
@@ -48,6 +51,8 @@ setMainPhoto(photo:Photo)
           if(p.id === photo.id) p.isMain = true;
           
         });
+        this.toastr.success("New main photo saved.");
+  
       }
       
     }
@@ -60,7 +65,8 @@ deletePhoto(photoId:number)
     next:response=>
     {
       //returns an array of all the photos except the one with that id
-      this.member.photos = this.member.photos.filter(x=> x.id !== photoId);   
+      this.member.photos = this.member.photos.filter(x=> x.id !== photoId); 
+      this.toastr.success("Photo successfully deleted.");  
     }
   })
 }
@@ -92,6 +98,7 @@ deletePhoto(photoId:number)
       {
         const photo = JSON.parse(response);
         this.member.photos.push(photo);
+        this.toastr.success("Photo successfully added.");
       }
     }
   }

@@ -1,23 +1,50 @@
 <br>
 <br>
-  <div class="container d-flex justify-content-center">
+  <div class="container d-flex justify-content-center mb-3">
        <div class="p-4 border rounded shadow" style="width: 300px;"> Register
-     <form #RegisterForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="register()" autocomplete="off" >
-        <input name = "username" 
-        [(ngModel)]="model.username"
-         class="form-control mr-sm-2" 
-         type="text" 
-         placeholder="Username"/>
+     <form [formGroup]="registerForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="register()" autocomplete="off" >
 
+      <br>
+      <div class="form-group">
+          <label for="" style="margin-right:10px" class="control-label"> Gender:</label>
+          <label class="radio-inline ms-1">
+            <input type="radio" class="form-check-input" value="male" formControlName="gender">Male
+          </label>
+          <label class="radio-inline ms-1">
+            <input type="radio" value="female" class="form-check-input ms-3" formControlName="gender">Female
+          </label>
+        </div>
+      <br>
+
+      <!-- passing controls my my input text component to handle validation error messages -->
+        <app-text-input [formControl]='registerForm.controls["username"]' [label]='"Username"'></app-text-input>
         <br>
 
-        <input name="password" 
-        [(ngModel)] = "model.password"
-         class="form-control mr-sm2" 
-         type="password" 
-         placeholder="password"/>
+        <app-text-input [formControl]="registerForm.controls['password']"
+         [label]='"Password"' [type]='"password"'></app-text-input>
+        <br>
 
+        <app-text-input [formControl]="registerForm.controls['confirmPassword']"
+         [label]='"Confirm Password"' [type]='"password"'></app-text-input>
         <br> 
+
+        <app-text-input [formControl]="registerForm.controls['knownAs']"
+         [label]='"KnownAs"'></app-text-input>
+        <br>
+
+         <app-date-input [formControl]="registerForm.controls['dateOfBirth']"
+         [label]='"Date of Birth"' [maxDate]="maxDateStruct"></app-date-input>
+        <br> 
+
+        <app-text-input [formControl]="registerForm.controls['city']"
+         [label]='"City"' ></app-text-input>
+        <br> 
+
+        <app-text-input [formControl]="registerForm.controls['country']"
+         [label]='"Country"'></app-text-input>
+        <br> 
+
+
         <div style="display: flex; justify-content: center; align-items: center;">
           <button class="btn btn-outline-success" type="submit">Register</button>  
         </div>
@@ -27,3 +54,11 @@
       </form>
     </div>
   </div>
+
+
+
+<p class="ms-5">
+  form status: {{registerForm.status}}
+</p>
+
+  

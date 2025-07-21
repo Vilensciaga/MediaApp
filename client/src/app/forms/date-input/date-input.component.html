@@ -1,0 +1,24 @@
+<div class="form-group row row-cols-sm-auto">
+    <div class="col-12">
+        <div class="input-group">
+            <input type="text"
+            [class.is-invalid] = 'ngControl.touched &&  ngControl.invalid'
+            class="form-control"
+            [formControl]="getFormControl!"
+            placeholder="{{label}}"
+            [maxDate]="maxDate"
+            name="dp"
+            ngbDatepicker
+            #d="ngbDatepicker"
+        >
+        <button class="btn btn-outline-primary bi bi-calendar3" (click)="d.toggle()" type="button">
+                    <!-- <i class="bi bi-calendar3"></i> -->
+        </button>
+
+        <div *ngIf="ngControl.control?.errors?.['required']" class="invalid-feedback">Please enter a {{label}}.</div>
+        </div>
+        
+    </div>
+
+
+</div>

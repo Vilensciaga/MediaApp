@@ -22,6 +22,7 @@
     "@ng-bootstrap/ng-bootstrap": "^18.0.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.6",
+    "bootstrap-icons": "^1.13.1",
     "bootswatch": "^5.3.6",
     "font-awesome": "^4.7.0",
     "ng-gallery": "^12.0.0-beta.4",
