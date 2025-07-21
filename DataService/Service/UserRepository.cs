@@ -33,14 +33,28 @@ namespace DataService.Service
                 .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
                 .ToListAsync();
 
-            //project does not need the include clause
+            //projectTo does not need the include clause
+
+
+
+            //var users = await context.Users
+            //    .Include(u => u.Photos)
+            //    .ToListAsync();
+
+            //return mapper.Map<IEnumerable<MemberDto>>(users);
         }
 
-        public async Task<MemberDto?> GetMemberByUsernameAsync(string username)
+        public async Task<MemberDto> GetMemberByUsernameAsync(string username)
         {
             return await context.Users.Where(x => x.UserName == username)
                 .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
+
+            //var users = await context.Users
+            //            .Include(u => u.Photos)
+            //            .ToListAsync();
+
+            //return mapper.Map<MemberDto>(users);
 
         }
 
@@ -48,13 +62,14 @@ namespace DataService.Service
         public async Task<AppUser> RegisterUserAsync(RegisterDto register)
         {
             using var hmac = new HMACSHA512();
-            AppUser user = new AppUser
-            {
-                UserName = register.Username.ToLower(),
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(register.Password)),
-                PasswordSalt = hmac.Key
+            var user = mapper.Map<AppUser>(register);
 
-            };
+            user.UserName = register.Username.ToLower();
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(register.Password));
+            user.PasswordSalt = hmac.Key;
+            user.CreatedAt = DateTime.UtcNow;
+
+            
 
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();

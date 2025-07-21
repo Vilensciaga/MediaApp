@@ -16,15 +16,15 @@ namespace Models.Dtos.User
         {
             CreateMap<AppUser, AppUserDto>().ReverseMap();
 
-            CreateMap<AppUser, RegisterDto>()
-                .ForMember(d => d.Password, s => s.MapFrom(x => x.PasswordHash));
+            CreateMap<AppUser, RegisterDto>().ReverseMap();
+               // .ForMember(d => d.Password, s => s.MapFrom(x => x.PasswordHash));
             CreateMap<AppUser, LoginDto>()
                 .ForMember(d => d.Password, s => s.MapFrom(x => x.PasswordHash));
          
 
             CreateMap<AppUser, MemberDto>()
-                .ForMember(d=> d.PhotoUrl, o=> o.MapFrom(s=> s.Photos.FirstOrDefault(x=> x.IsMain).Url))
-                .ForMember(d=> d.Age, o=> o.MapFrom(s=> s.DateOfBirth.CalculateAge()));
+                .ForMember(d=> d.PhotoUrl, o=> o.MapFrom(s=> s.Photos != null ? s.Photos.FirstOrDefault(x=> x.IsMain).Url : null))
+                .ForMember(d=> d.Age, o=> o.MapFrom(s=> s.DateOfBirth != null ? s.DateOfBirth.CalculateAge() : (int?)null));
             //our calculate age extension method, help us project to the memberdto 
                 
             CreateMap<Photo, PhotoDto>();

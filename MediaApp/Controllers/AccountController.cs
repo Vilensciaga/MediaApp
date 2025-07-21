@@ -49,7 +49,8 @@ namespace MediaApp.Controllers
             UserDto dto = new UserDto
             {
                 UserName = user.UserName,
-                Token = await tokenService.CreateToken(user)
+                Token = await tokenService.CreateToken(user),
+                KnownAs = user.KnownAs
             };
 
             //using create at route because the method to grab user by id or username is in the user controller
@@ -86,6 +87,7 @@ namespace MediaApp.Controllers
                 UserName = existingUser.UserName,
                 Token = await tokenService.CreateToken(existingUser),
                 PhotoUrl = existingUser.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+                KnownAs = existingUser.KnownAs
             };
 
             return Ok(dto);

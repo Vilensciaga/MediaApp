@@ -13,5 +13,6 @@ namespace Models.Dtos.User
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
+
     }
 }

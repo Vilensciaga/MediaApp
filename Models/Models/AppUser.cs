@@ -20,22 +20,22 @@ namespace MediaApp.Models
         public byte[] PasswordSalt { get; set; }
         public DateTime DateOfBirth { get; set; }
         [MaxLength(50)]
-        public string KnownAs { get; set; }
+        public string? KnownAs { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime LastActive { get; set; } = DateTime.Now;
         [MaxLength(50)]
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
         [MaxLength(5000)]
-        public string Introduction { get; set; }
+        public string? Introduction { get; set; }
         [MaxLength(10000)]
-        public string LookingFor { get; set; }
+        public string? LookingFor { get; set; }
         [MaxLength(10000)]
-        public string Interests { get; set; }
+        public string? Interests { get; set; }
         [MaxLength(50)]
-        public string City { get; set; }
+        public string? City { get; set; }
         [MaxLength(50)]
-        public string Country { get; set; }
-        public ICollection<Photo> Photos { get; set; }
+        public string? Country { get; set; }
+        public ICollection<Photo> Photos { get; set; } = new List<Photo>();
 
 
         //this is making entity framework make exensive queries pulling all the data when we

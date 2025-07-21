@@ -21,15 +21,15 @@ namespace Database.Migrations
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    KnownAs = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    KnownAs = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastActive = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Introduction = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    LookingFor = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
-                    Interests = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
-                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Gender = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Introduction = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
+                    LookingFor = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: true),
+                    Interests = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: true),
+                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,7 +42,7 @@ namespace Database.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Url = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     IsMain = table.Column<bool>(type: "bit", nullable: false),
                     PublicId = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     AppUserId = table.Column<int>(type: "int", nullable: false)
