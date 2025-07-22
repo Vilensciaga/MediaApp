@@ -31,25 +31,7 @@ var app = builder.Build();
  * call Seed static method in database/seedindData 
  * logs error on failure
  */
-
-await using (var scope = app.Services.CreateAsyncScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<IAppDbContext>();
-        //applies pending migrations or create database if it dont exixt
-        await context.Database.MigrateAsync();
-        await Seed.SeedUsers(context);       
-    }
-    catch (Exception ex)
-    {
-        // handle errors or log them
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Error during DB seeding or migration");
-
-    }
-}
+await app.SeedDatabase();
 
 
 app.UseMiddleware<ExceptionMiddleware>();
