@@ -2,7 +2,7 @@
 <br>
   <div class="container d-flex justify-content-center mb-3">
        <div class="p-4 border rounded shadow" style="width: 300px;"> Register
-     <form [formGroup]="registerForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="register()" autocomplete="off" >
+     <form [formGroup]="registerForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="registerForm.valid && register()" autocomplete="off" >
 
       <br>
       <div class="form-group">
@@ -44,9 +44,16 @@
          [label]='"Country"'></app-text-input>
         <br> 
 
+        <div class="row" *ngIf="validationErrors.length > 0">
+          <ul class="text-danger">
+            <li *ngFor="let error of validationErrors">
+              {{error}}
+            </li>
+          </ul>
+        </div>
 
         <div style="display: flex; justify-content: center; align-items: center;">
-          <button class="btn btn-outline-success" type="submit">Register</button>  
+          <button [disabled]="!registerForm.valid" class="btn btn-outline-success" type="submit">Register</button>  
         </div>
         <div style="display: flex; justify-content: center; font-size: small;">
             <a [routerLink]="['/login']" class="" style="color:forestgreen ;">Login</a>
@@ -56,9 +63,9 @@
   </div>
 
 
-
+<!-- 
 <p class="ms-5">
   form status: {{registerForm.status}}
 </p>
 
-  
+   -->

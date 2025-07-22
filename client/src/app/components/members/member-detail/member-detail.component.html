@@ -1,7 +1,7 @@
 <div class="row mt-3" *ngIf="member">
     <div class="col-4">
         <div class="card">
-            <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
+            <img src="{{member.photoUrl || 'user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
             <div class="card-body">
                 <div>
                     <strong>Location:</strong>
@@ -44,12 +44,15 @@
             <div class="tab-pane fade show active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab" tabindex="0">
                 <h4 class="mt-4">Description</h4>
                 <p>{{member.introduction}}</p>
+                <p *ngIf="!member.introduction"> User has yet to fill Introduction.</p>
                 <h4>Looking For</h4>
                 <p>{{member.lookingFor}}</p>
+                 <p *ngIf="!member.lookingFor"> User has yet to fill Looking For.</p>
             </div>
             <div class="tab-pane fade" id="nav-interest" role="tabpanel" aria-labelledby="nav-interest-tab" tabindex="0">
                 <h4 class="mt-4">Interests</h4>
                 <p>{{member.interests}}</p>
+                 <p *ngIf="!member.interests"> User has yet to fill Interests.</p>
             </div>
 
 

@@ -14,9 +14,9 @@ import { DateInputComponent } from "../../forms/date-input/date-input.component"
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit{
-  model:any = {};
 
   maxDateStruct!:NgbDateStruct;
+  validationErrors:string[] = [];
 
 
   registerForm!: FormGroup<{
@@ -42,6 +42,7 @@ export class RegisterComponent implements OnInit{
     this.initializeForm();
     this.matchingPasswordUpdate();
     this.maxDateStruct = this.toNgbDateStruct();
+    this.convertDateObject();
   }
 
   matchValues(matchTo:string):ValidatorFn
@@ -62,30 +63,39 @@ export class RegisterComponent implements OnInit{
 
   toNgbDateStruct(): NgbDateStruct {
     var date = new Date();
-    date.setFullYear(date.getFullYear()-18);
+    date.setFullYear(date.getFullYear() - 18);
     return {
       year: date.getFullYear(),
-      month: date.getMonth() + 1, // JS months are 0-based
+      month: date.getMonth() + 1, 
       day: date.getDate()
     };
 }
 
   register()
   {
-    // this.accountService.register(this.model).subscribe({
-    //   next: response =>{
-    //     //console.log(response);
-    //     //setTimeout(()=>{
-    //       this.router.navigate(["/home"]);
-    //     //}, 500)
-    //   },
-    //   error: error =>
-    //   {
-    //     this.toastr.error(error.error);
-    //   }
-    // });
+    this.convertDateObject();
+    this.accountService.register(this.registerForm.value).subscribe({
+      next: response =>{
+        //console.log(response);
+        //setTimeout(()=>{
+          this.router.navigate(["/home"]);
+        //}, 500)
+      },
+      error: error =>
+      {
+        //error is coming from interceptor instead
+        //this.toastr.error(error.error);
+        this.validationErrors = error;
+      }
+    });
 
-    console.log(this.registerForm.value);
+  }
+
+  convertDateObject()
+  {
+    var date = new Date(this.maxDateStruct.year, this.maxDateStruct.month - 1, this.maxDateStruct.day);
+    this.registerForm.controls['dateOfBirth'].setValue(date.toISOString());
+    console.log("date: ",this.registerForm.controls["dateOfBirth"].value);
   }
 
   matchingPasswordUpdate()
