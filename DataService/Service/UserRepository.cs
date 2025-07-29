@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Models.Dtos.User;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -29,25 +30,25 @@ namespace DataService.Service
 
         public async Task<PagedList<MemberDto>> GetAllMembersAsync(UserParams userParams)
         {
-            var query = context.Users
-                //.Include(p => p.Photos)
-                .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
-                .AsNoTracking();
+            var query = context.Users.AsQueryable();
 
-            //projectTo does not need the include clause
+            query = query.Where(u => u.UserName != userParams.CurrentUsername);
+            query = query.Where(u => u.Gender == userParams.Gender);
 
-            return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+            var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+            var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+
+            query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
 
 
-            //var users = await context.Users
-            //    .Include(u => u.Photos)
-            //    .ToListAsync();
-
-            //return mapper.Map<IEnumerable<MemberDto>>(users);
+            return await PagedList<MemberDto>.CreateAsync(
+                query.ProjectTo<MemberDto>(mapper.ConfigurationProvider).AsNoTracking(), 
+                userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<MemberDto> GetMemberByUsernameAsync(string username)
         {
+            //projectTo does not need the include clause
             return await context.Users.Where(x => x.UserName == username)
                 .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();

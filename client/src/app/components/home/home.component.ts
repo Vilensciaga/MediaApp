@@ -26,21 +26,21 @@ export class HomeComponent implements OnInit{
 
   ngOnInit()
   {
-    this.getUsers();
+    //this.getUsers();
   }
 
   getUsers()
   {
-    this.memberService.getMembers().subscribe({
-      next:response=>
-      {
-        this.users = response;
-      },
-      error:error=>
-      {
-        console.log(error);
-      }
-    });
+    // this.memberService.getMembers().subscribe({
+    //   next:response=>
+    //   {
+    //     this.users = response;
+    //   },
+    //   error:error=>
+    //   {
+    //     console.log(error);
+    //   }
+    // });
       
   }
   

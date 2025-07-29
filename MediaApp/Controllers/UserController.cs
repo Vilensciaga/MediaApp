@@ -32,6 +32,14 @@ namespace MediaApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetAllUsersAsync([FromQuery]UserParams userParams)
         {
+            var user = await userService.GetUserbyUsernameAsync(User.GetUsername());
+            userParams.CurrentUsername = user.UserName;
+
+            if(string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = user.Gender == "male" ? "female" : "male";
+            }
+
             //users is now of type paged list rather than i enumerable
             var users = await userService.GetAllMembersAsync(userParams);
             //var u = mapper.Map<IEnumerable<MemberDto>>(users);

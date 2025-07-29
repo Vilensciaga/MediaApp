@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Member } from '../../models/member';
 import { map, of } from 'rxjs';
 import { PaginatedResult } from '../../models/pagination';
+import { UserParams } from '../../models/userParams';
 
 @Injectable({
   providedIn: 'root'
@@ -13,46 +14,10 @@ export class MembersService {
   baseUrl = environment.apiUrl;
   //and array to hold the http request responses to limit number of http requests
   members: Member[] = [];
-  paginatedResult:PaginatedResult<Member[]> = new PaginatedResult<Member[]>();
 
   
   constructor(private http:HttpClient) { }
 
-  getMembers(page?:number, itemsPerPage?:number)
-  {
-    // //checking the array to see if there is data to query from to limit http requests
-    // //if(this.members.length > 0) return of(this.members);
-
-
-    // return this.http.get<Member[]>(this.baseUrl + 'user').pipe(
-    //   map(members=> {
-    //     this.members= members;
-    //     return members;
-    //   })
-    // )
-    let params = new HttpParams();
-    if(page != null && itemsPerPage != null)
-    {
-      params = params.append('pageNumber', page.toString());
-      params = params.append('pageSize', itemsPerPage.toString());
-    }
-
-    //observe make this return the whole response rather than the respose body,
-    //so we need to grab the body
-    return this.http.get<Member[]>(this.baseUrl + 'user', {observe: 'response', params}).pipe(
-      map(response =>{
-        this.paginatedResult.result = response.body ?? [];
-        if(response.headers.get('Pagination') != null)
-        {
-          this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') ?? '');
-        }
-        return this.paginatedResult;
-      })
-
-    )
-    
-
-  }
 
   getMember(username:string)
   {
@@ -86,6 +51,45 @@ deletePhoto(photoId:number)
 }
 
 
+getMembers(userParams:UserParams)
+  {
+    let params = this.getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
+    params = params.append('minAge', userParams.minAge.toString());
+    params = params.append('maxAge', userParams.maxAge.toString());
+    params = params.append('gender', userParams.gender);
 
+    //observe make this return the whole response rather than the respose body,
+    //so we need to grab the body
+    return this.getPaginatedResult<Member[]>(this.baseUrl + 'user', params)
+  }
+
+  private getPaginationHeaders(pageNumber: number, pageSize:number)
+  {
+      let params = new HttpParams();
+
+        params = params.append('pageNumber', pageNumber.toString());
+        params = params.append('pageSize', pageSize.toString());
+
+        return params;
+  }
+
+
+
+  private getPaginatedResult<T>(url:string, params:HttpParams) 
+  {
+    const paginatedResult:PaginatedResult<T> = new PaginatedResult<T>();
+
+    return this.http.get<T>(url, { observe: 'response', params}).pipe(
+      map(response => {
+        paginatedResult.result = response.body ?? [] as T;
+        if (response.headers.get('Pagination') != null) {
+          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') ?? '');
+          console.log('here', paginatedResult)
+        }
+        return paginatedResult;
+      })
+
+    );
+  }
 
 }
