@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Helpers.Helpers;
 namespace DataService.Interface
 {
     public interface IUserRepository
     {
-        public Task<IEnumerable<MemberDto>> GetAllMembersAsync();
+        public Task<PagedList<MemberDto>> GetAllMembersAsync(UserParams userParams);
 
         public Task<MemberDto> GetMemberByUsernameAsync(string username);
 

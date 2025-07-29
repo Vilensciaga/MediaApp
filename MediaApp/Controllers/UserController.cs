@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Models.Dtos.User;
 using System.Security.Claims;
-using Extensions.AppExtensions;
 using DataService.Service;
 using Models.Models;
 using CloudinaryDotNet.Actions;
+using Extensions.AppExtensions;
+using Helpers.Helpers;
 
 namespace MediaApp.Controllers
 {
@@ -29,10 +30,13 @@ namespace MediaApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetAllUsersAsync()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetAllUsersAsync([FromQuery]UserParams userParams)
         {
-            var users = await userService.GetAllMembersAsync();
+            //users is now of type paged list rather than i enumerable
+            var users = await userService.GetAllMembersAsync(userParams);
             //var u = mapper.Map<IEnumerable<MemberDto>>(users);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             if (users is null)
             {

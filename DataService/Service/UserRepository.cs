@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Database.Data;
 using Database.Interface;
 using DataService.Interface;
+using Helpers.Helpers;
 using MediaApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Models.Dtos.User;
@@ -26,15 +27,16 @@ namespace DataService.Service
         }
 
 
-        public async Task<IEnumerable<MemberDto>> GetAllMembersAsync()
+        public async Task<PagedList<MemberDto>> GetAllMembersAsync(UserParams userParams)
         {
-            return await context.Users
+            var query = context.Users
                 //.Include(p => p.Photos)
                 .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
-                .ToListAsync();
+                .AsNoTracking();
 
             //projectTo does not need the include clause
 
+            return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
 
 
             //var users = await context.Users

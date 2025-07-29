@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj" />
+	  <ProjectReference Include="..\Helpers\Helpers.csproj" />
+
   </ItemGroup>
 
 </Project>

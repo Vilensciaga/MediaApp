@@ -34,6 +34,15 @@ namespace Database.Data
         }
 
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AppUser>()
+                .HasIndex(u => u.UserName)
+                .HasDatabaseName("IX_Users_UserName")
+                .IsUnique(); // Optional, depending on if you want to enforce uniqueness
+        }
+
+
 
     }
 }

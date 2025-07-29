@@ -1,8 +1,8 @@
 using Database.Data;
 using Database.Interface;
 using Database.SeedingData;
-using Extensions.AppExtensions;
 using MediaApp.Middleware;
+using Extensions.AppExtensions;
 using Microsoft.EntityFrameworkCore;
 
 
