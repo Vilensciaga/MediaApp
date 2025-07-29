@@ -10,11 +10,13 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserParams } from '../../../models/userParams';
 import { AccountService } from '../../../services/userServices/account.service';
 import { User } from '../../../models/user';
+import { FormsModule } from '@angular/forms';
+
 
 
 @Component({
   selector: 'app-member-list',
-  imports: [CommonModule, MemberCardComponent, NgbPaginationModule],
+  imports: [CommonModule, MemberCardComponent, NgbPaginationModule, FormsModule],
   templateUrl: './member-list.component.html',
   styleUrl: './member-list.component.css'
 })
@@ -25,6 +27,7 @@ export class MemberListComponent implements OnInit{
    pagination!:Pagination;
    userParams!:UserParams;
    user!:User;
+   genderList=[{'value': 'male', display:'Males'},{'value': 'female', display:'Females'}]
 
   constructor(private memberService:MembersService,
               private toastr:ToastrService,
@@ -56,6 +59,10 @@ export class MemberListComponent implements OnInit{
     })
   }
 
+  resetFilters(){
+    this.userParams = new UserParams(this.user);
+    this.loadMembers();
+  }
   pageChanged(page:number)
   {
     this.userParams.pageNumber = page;
