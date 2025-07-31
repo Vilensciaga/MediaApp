@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="CloudinaryDotNet" Version="1.27.6" />
+    <PackageReference Include="F23.Kernel" Version="0.1.0" />
+    <PackageReference Include="F23.Kernel.AspNetCore" Version="0.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
@@ -21,9 +23,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Auth\Auth.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
-    <ProjectReference Include="..\DataService\DataService.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
 	  <ProjectReference Include="..\Helpers\Helpers.csproj" />
 	  <ProjectReference Include="..\Extensions\Extensions.csproj" />
+	  <ProjectReference Include="..\UseCases\UseCases.csproj" />
 
   </ItemGroup>
 

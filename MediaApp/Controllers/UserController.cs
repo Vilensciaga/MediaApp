@@ -11,6 +11,9 @@ using Models.Models;
 using CloudinaryDotNet.Actions;
 using Extensions.AppExtensions;
 using Helpers.Helpers;
+using F23.Kernel;
+using UseCases.GetMember;
+using F23.Kernel.AspNetCore;
 
 namespace MediaApp.Controllers
 {
@@ -22,11 +25,14 @@ namespace MediaApp.Controllers
         private readonly IUserRepository userService;
         private readonly IMapper mapper;
         private readonly IPhotoService photoservice;
-        public UserController(IUserRepository userService, IMapper mapper, IPhotoService photoservice) 
+        private readonly IQueryHandler<GetMemberQuery, GetMemberQueryResult> queryHandler;
+        public UserController(IUserRepository userService, IMapper mapper, IPhotoService photoservice,
+            IQueryHandler<GetMemberQuery, GetMemberQueryResult> queryHandler) 
         {
             this.userService = userService;
             this.mapper = mapper;
             this.photoservice = photoservice;
+            this.queryHandler = queryHandler;
         }
 
         [HttpGet]
@@ -72,21 +78,14 @@ namespace MediaApp.Controllers
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUserByUsernameAsync([FromRoute] string username)
         {
-            if(username is null)
+            var query = new GetMemberQuery
             {
-                return BadRequest("Please enter a Username");
-            }
+                Username = username
+            };
 
-            var user = await userService.GetMemberByUsernameAsync(username);
+            var result = await queryHandler.Handle(query);
 
-            if(user is null)
-            {
-                return NotFound("User not found");
-            }
-
-          
-
-            return Ok(user);
+            return Ok( result.ToActionResult());
 
         }
 

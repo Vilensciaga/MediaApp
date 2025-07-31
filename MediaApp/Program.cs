@@ -4,6 +4,8 @@ using Database.SeedingData;
 using MediaApp.Middleware;
 using Extensions.AppExtensions;
 using Microsoft.EntityFrameworkCore;
+using F23.Kernel;
+using UseCases.GetMember;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,7 @@ builder.Services.AddApplicationServices(config);
 builder.Services.AddIdentityServices(config);
 builder.Services.AddSwaggerIdentityService();
 builder.Services.CorsServices();
+builder.Services.RegisterQueryHandler<GetMemberQuery, GetMemberQueryResult, GetMemberQueryHandler>();
 
 
 
