@@ -46,7 +46,7 @@ namespace DataService.Service
                 userParams.PageNumber, userParams.PageSize);
         }
 
-        public async Task<MemberDto> GetMemberByUsernameAsync(string username)
+        public async Task<MemberDto?> GetMemberByUsernameAsync(string username, CancellationToken cancellationToken = default)
         {
             //projectTo does not need the include clause
             return await context.Users.Where(x => x.UserName == username)
