@@ -58,20 +58,22 @@ namespace MediaApp.Controllers
 
             return Ok(users);
         }
+        
+        //Not in use by the front end
 
-        [HttpGet("id:{id}")]
-        public async Task<ActionResult<MemberDto>> GetUseByIdAsync([FromRoute] int id)
-        {
-            AppUser user = await userService.GetUsersByIdAsync(id);
-            var u = mapper.Map<MemberDto>(user);
+        //[HttpGet("id:{id}")]
+        //public async Task<ActionResult<MemberDto>> GetUseByIdAsync([FromRoute] int id)
+        //{
+        //    AppUser user = await userService.GetUsersByIdAsync(id);
+        //    var u = mapper.Map<MemberDto>(user);
 
-            if(user is null)
-            {
-                return BadRequest("User does not exist");
-            }
+        //    if(user is null)
+        //    {
+        //        return BadRequest("User does not exist");
+        //    }
 
-            return Ok(u);
-        }
+        //    return Ok(u);
+        //}
 
         //adding name to the route so i can access it in my account controller when i create a new user to return created at route 201 message
         [HttpGet("{username}", Name = "GetUser")]

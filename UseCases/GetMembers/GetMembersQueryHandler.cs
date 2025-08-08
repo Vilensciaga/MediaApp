@@ -1,13 +1,6 @@
 ﻿using DataService.Interface;
 using F23.Kernel;
 using F23.Kernel.Results;
-using Helpers.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.GetMember;
 
 namespace UseCases.GetMembers
 {
