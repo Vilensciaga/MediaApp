@@ -4,6 +4,7 @@ using Database.Data;
 using Database.Interface;
 using DataService.Interface;
 using Helpers.Helpers;
+using Helpers.Helpers.PageList;
 using MediaApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Models.Dtos.User;
@@ -21,14 +22,17 @@ namespace DataService.Service
     {
         private readonly IAppDbContext context;
         private readonly IMapper mapper;
-        public UserRepository(IAppDbContext context, IMapper mapper) 
+        private readonly IPagedlistFactory pagedListFactory;
+
+        public UserRepository(IAppDbContext context, IMapper mapper, IPagedlistFactory pagedListFactory) 
         {
             this.context = context;
             this.mapper = mapper;
+            this.pagedListFactory = pagedListFactory;
         }
 
 
-        public async Task<PagedList<MemberDto>> GetAllMembersAsync(UserParams userParams)
+        public async Task<IPagedList<MemberDto>> GetAllMembersAsync(UserParams userParams)
         {
             var query = context.Users.AsQueryable();
 
@@ -41,12 +45,12 @@ namespace DataService.Service
             query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
 
 
-            return await PagedList<MemberDto>.CreateAsync(
+            return await pagedListFactory.CreateAsync(
                 query.ProjectTo<MemberDto>(mapper.ConfigurationProvider).AsNoTracking(), 
                 userParams.PageNumber, userParams.PageSize);
         }
 
-        public async Task<MemberDto?> GetMemberByUsernameAsync(string username, CancellationToken cancellationToken = default)
+        public async Task<MemberDto?> GetMemberByUsernameAsync(string username /*, CancellationToken cancellationToken = default*/)
         {
             //projectTo does not need the include clause
             return await context.Users.Where(x => x.UserName == username)
