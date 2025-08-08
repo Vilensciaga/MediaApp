@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Models.Models.Settings;
+using Helpers.Helpers.PageList;
 
 namespace Extensions.AppExtensions
 {
@@ -32,6 +33,11 @@ namespace Extensions.AppExtensions
 
             //database context for dependency injection
             services.AddTransient<IAppDbContext, AppDbContext>();
+
+            //Pagination dependency Injection
+            //registering generic dependency injections
+            services.AddTransient(typeof(IPagedList<>), typeof(PagedList<>));
+            services.AddTransient<IPagedlistFactory, PagedListFactory>();
 
 
 

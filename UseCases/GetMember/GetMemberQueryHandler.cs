@@ -20,7 +20,7 @@ namespace UseCases.GetMember
                 return Result<GetMemberQueryResult>.ValidationFailed(failed.Errors);
             }
 
-            var member = await userRepo.GetMemberByUsernameAsync(query.Username, cancellationToken);
+            var member = await userRepo.GetMemberByUsernameAsync(query.Username /*, cancellationToken*/);
 
             if(member is null)
             {

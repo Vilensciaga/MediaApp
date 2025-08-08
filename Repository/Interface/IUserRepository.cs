@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Helpers.Helpers;
+using Helpers.Helpers.PageList;
 namespace DataService.Interface
 {
     public interface IUserRepository
     {
-        public Task<PagedList<MemberDto>> GetAllMembersAsync(UserParams userParams);
+        public Task<IPagedList<MemberDto>> GetAllMembersAsync(UserParams userParams);
 
-        public Task<MemberDto> GetMemberByUsernameAsync(string username, CancellationToken cancellationToken = default);
+        public Task<MemberDto> GetMemberByUsernameAsync(string username /*, CancellationToken cancellationToken = default*/);
 
         public Task<AppUser> RegisterUserAsync(RegisterDto register);
 

@@ -25,14 +25,13 @@ namespace MediaApp.Controllers
         private readonly IUserRepository userService;
         private readonly IMapper mapper;
         private readonly IPhotoService photoservice;
-        private readonly IQueryHandler<GetMemberQuery, GetMemberQueryResult> queryHandler;
-        public UserController(IUserRepository userService, IMapper mapper, IPhotoService photoservice,
-            IQueryHandler<GetMemberQuery, GetMemberQueryResult> queryHandler) 
+        //private readonly IQueryHandler<GetMemberQuery, GetMemberQueryResult> queryHandler;
+        public UserController(IUserRepository userService, IMapper mapper, IPhotoService photoservice) 
         {
             this.userService = userService;
             this.mapper = mapper;
             this.photoservice = photoservice;
-            this.queryHandler = queryHandler;
+            //this.queryHandler = queryHandler;
         }
 
         [HttpGet]
@@ -78,14 +77,21 @@ namespace MediaApp.Controllers
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUserByUsernameAsync([FromRoute] string username)
         {
-            var query = new GetMemberQuery
+            if (username is null)
             {
-                Username = username
-            };
+                return BadRequest("Please enter a Username");
+            }
 
-            var result = await queryHandler.Handle(query);
+            var user = await userService.GetMemberByUsernameAsync(username);
 
-            return Ok( result.ToActionResult());
+            if (user is null)
+            {
+                return NotFound("User not found");
+            }
+
+
+
+            return Ok(user);
 
         }
 
