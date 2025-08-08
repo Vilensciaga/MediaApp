@@ -6,6 +6,7 @@ using Extensions.AppExtensions;
 using Microsoft.EntityFrameworkCore;
 using F23.Kernel;
 using UseCases.GetMember;
+using UseCases.GetMembers;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,7 +24,8 @@ builder.Services.AddApplicationServices(config);
 builder.Services.AddIdentityServices(config);
 builder.Services.AddSwaggerIdentityService();
 builder.Services.CorsServices();
-builder.Services.RegisterQueryHandler<GetMemberQuery, GetMemberQueryResult, GetMemberQueryHandler>();
+builder.Services.AddRegisterQueryServices();
+
 
 
 
