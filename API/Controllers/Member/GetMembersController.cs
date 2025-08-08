@@ -1,8 +1,8 @@
 ﻿using Extensions.AppExtensions;
 using F23.Kernel;
+using F23.Kernel.AspNetCore;
 using Helpers.Helpers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Dtos.User;
 using UseCases.GetMembers;
@@ -17,7 +17,7 @@ namespace API.Controllers.Member
     {
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetMembersAsync([FromRoute] UserParams userParams)
+        public async Task<IActionResult> GetMembersAsync([FromRoute] UserParams userParams)
         {
             string username = User.GetUsername();
 
@@ -29,7 +29,7 @@ namespace API.Controllers.Member
 
             var result = await queryHandler.Handle(query);
 
-            return Ok(result);
+            return result.ToActionResult();
         }
     }
 }

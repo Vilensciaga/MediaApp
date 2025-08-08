@@ -1,4 +1,5 @@
 ﻿using F23.Kernel;
+using F23.Kernel.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Dtos.User;
@@ -13,7 +14,7 @@ namespace MediaApp.Controllers.Member
     {
         //adding name to the route so i can access it in my account controller when i create a new user to return created at route 201 message
         [HttpGet("{username}")]
-        public async Task<ActionResult<MemberDto>> GetUserByUsernameAsync([FromRoute] string username)
+        public async Task<IActionResult> GetUserByUsernameAsync([FromRoute] string username)
         {
             var query = new GetMemberQuery
             {
@@ -22,7 +23,7 @@ namespace MediaApp.Controllers.Member
 
             var result = await queryHandler.Handle(query);
 
-            return Ok(result);
+            return result.ToActionResult();
 
         }
     }
