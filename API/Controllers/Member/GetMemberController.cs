@@ -23,8 +23,9 @@ namespace MediaApp.Controllers.Member
 
             var result = await queryHandler.Handle(query);
 
-            return result.ToActionResult();
+            //var memberResult = result.Map<MemberDto>(r => r.Member);
 
+            return result.ToActionResult();
         }
     }
 }

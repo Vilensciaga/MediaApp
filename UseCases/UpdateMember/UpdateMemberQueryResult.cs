@@ -8,5 +8,6 @@ namespace UseCases.UpdateMember
 {
     public class UpdateMemberQueryResult
     {
+        public bool SuccessStatus { get; set; }
     }
 }
