@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UseCases.GetMembers;
+using UseCases.Member.GetMembers;
 
-namespace UseCases.UpdateMember
+namespace UseCases.Member.UpdateMember
 {
     public class UpdateMemberQueryHandler(IUserRepository userRepository, IValidator<UpdateMemberQuery> validator, IMapper mapper):
         IQueryHandler<UpdateMemberQuery, UpdateMemberQueryResult>
@@ -35,12 +35,17 @@ namespace UseCases.UpdateMember
 
             if (await userRepository.SaveAllAsync())
             {
-                result.SuccessStatus = true;
+                result.Message = "Member successfully updated.";
                 return Result<UpdateMemberQueryResult>.Success(result);
             }
 
-            result.SuccessStatus = false;
-            return Result<UpdateMemberQueryResult>.PreconditionFailed(PreconditionFailedReason.Conflict, "Failed to update user.");
+            result.Message = "Failed to update user.";
+
+            var failedUpdate = new ValidationFailedResult(
+                [ new("ErrorMessage", result.Message)]);
+
+            return Result<UpdateMemberQueryResult>
+                .ValidationFailed(failedUpdate.Errors);
 
         }
 

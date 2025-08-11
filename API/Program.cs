@@ -5,8 +5,8 @@ using MediaApp.Middleware;
 using Extensions.AppExtensions;
 using Microsoft.EntityFrameworkCore;
 using F23.Kernel;
-using UseCases.GetMember;
-using UseCases.GetMembers;
+using UseCases.MemberUsecases.GetMember;
+using UseCases.Member.GetMembers;
 
 
 var builder = WebApplication.CreateBuilder(args);

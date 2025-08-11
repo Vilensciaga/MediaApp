@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using F23.Kernel;
-using UseCases.GetMember;
 using FluentValidation;
+using UseCases.MemberUsecases.GetMember;
 
-namespace UseCases.GetMember
+namespace UseCases.MemberUsecases.GetMember
 {
     public class GetMemberQuery: IQuery<GetMemberQueryResult>
     {

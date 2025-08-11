@@ -8,7 +8,7 @@ using F23.Kernel.AspNetCore;
 using F23.Kernel;
 using F23.Kernel.Results;
 
-namespace UseCases.GetMember
+namespace UseCases.MemberUsecases.GetMember
 {
     public class GetMemberQueryHandler(IUserRepository userRepo, IValidator<GetMemberQuery> validator)
     : IQueryHandler<GetMemberQuery, GetMemberQueryResult>
@@ -20,11 +20,12 @@ namespace UseCases.GetMember
                 return Result<GetMemberQueryResult>.ValidationFailed(failed.Errors);
             }
 
-            var member = await userRepo.GetMemberByUsernameAsync(query.Username /*, cancellationToken*/);
+            var member = await userRepo.GetMemberByUsernameAsync(query.Username);
 
             if(member is null)
             {
-                return Result<GetMemberQueryResult>.PreconditionFailed(PreconditionFailedReason.NotFound);
+                return Result<GetMemberQueryResult>
+                    .PreconditionFailed(PreconditionFailedReason.NotFound);
             }
 
             var result = new GetMemberQueryResult

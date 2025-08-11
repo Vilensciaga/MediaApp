@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UseCases.UpdateMember
+namespace UseCases.PhotoUsecases.DeletePhoto
 {
-    public class UpdateMemberQueryResult
+    public class DeletePhotoQueryResult
     {
-        public bool SuccessStatus { get; set; }
+        public string Message { get; set; }
     }
 }

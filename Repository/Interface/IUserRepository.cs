@@ -13,7 +13,7 @@ namespace DataService.Interface
     {
         public Task<IPagedList<MemberDto>> GetAllMembersAsync(UserParams userParams);
 
-        public Task<MemberDto> GetMemberByUsernameAsync(string username /*, CancellationToken cancellationToken = default*/);
+        public Task<MemberDto> GetMemberByUsernameAsync(string username);
 
         public Task<AppUser> RegisterUserAsync(RegisterDto register);
 

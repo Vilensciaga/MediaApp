@@ -32,7 +32,7 @@ export class MembersService {
 
   editMember(member:Member)
   {
-    return this.http.put<Member>(this.baseUrl + 'user/', member).pipe(
+    return this.http.put<Member>(this.baseUrl + 'updateMember/', member).pipe(
       map(()=>{
         //updating the array
         const index = this.members.indexOf(member);
@@ -48,7 +48,7 @@ setMainPhoto(photoId:number)
 
 deletePhoto(photoId:number)
 {
-  return this.http.delete(this.baseUrl + 'user/delete-photo/' + photoId);
+  return this.http.delete(this.baseUrl + 'deletephoto/' + photoId);
 }
 
 
