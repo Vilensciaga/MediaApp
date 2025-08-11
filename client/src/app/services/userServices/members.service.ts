@@ -5,6 +5,7 @@ import { Member } from '../../models/member';
 import { map, of } from 'rxjs';
 import { PaginatedResult } from '../../models/pagination';
 import { UserParams } from '../../models/userParams';
+import { Result } from '../../models/Result';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class MembersService {
 
 
     if(member !== undefined) return of(member);
-    return this.http.get<Member>(this.baseUrl + 'user/' + username)
+    return this.http.get<Member>(this.baseUrl + 'getMember/' + username)
   }
 
   editMember(member:Member)
@@ -60,7 +61,7 @@ getMembers(userParams:UserParams)
 
     //observe make this return the whole response rather than the respose body,
     //so we need to grab the body
-    return this.getPaginatedResult<Member[]>(this.baseUrl + 'user', params)
+    return this.getPaginatedResult<Member[]>(this.baseUrl + 'getMembers', params)
   }
 
   private getPaginationHeaders(pageNumber: number, pageSize:number)

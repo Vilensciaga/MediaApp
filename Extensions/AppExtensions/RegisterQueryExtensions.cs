@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using UseCases.GetMember;
 using UseCases.GetMembers;
+using UseCases.UpdateMember;
 
 namespace Extensions.AppExtensions
 {
@@ -11,6 +12,8 @@ namespace Extensions.AppExtensions
         {
             services.RegisterQueryHandler<GetMemberQuery, GetMemberQueryResult, GetMemberQueryHandler>();
             services.RegisterQueryHandler<GetMembersQuery, GetMembersQueryResult, GetMembersQueryHandler>();
+            services.RegisterQueryHandler<UpdateMemberQuery, UpdateMemberQueryResult, UpdateMemberQueryHandler>();
+
 
             return services;
         }

@@ -10,13 +10,15 @@ import { jwtInterceptor } from './interceptors/jwt.interceptor';
 import { GalleryModule } from 'ng-gallery';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
+import { contentUnwrapInterceptor } from './interceptors/content-unwrap.interceptor';
+import { dynamicContentUnwrapInterceptor } from './interceptors/dynamic-content-unwrap.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes), 
     provideHttpClient(
-      withInterceptors([errorInterceptor, jwtInterceptor, loadingInterceptor]),
+      withInterceptors([errorInterceptor, jwtInterceptor, loadingInterceptor, dynamicContentUnwrapInterceptor]),
     ), 
     provideToastr({positionClass: 'toast-bottom-right'}),
    provideAnimations(),
