@@ -3,17 +3,10 @@ using DataService.Interface;
 using MediaApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Models.Dtos.User;
-using System.Security.Claims;
-using DataService.Service;
 using Models.Models;
-using CloudinaryDotNet.Actions;
 using Extensions.AppExtensions;
 using Helpers.Helpers;
-using F23.Kernel;
-using UseCases.GetMember;
-using F23.Kernel.AspNetCore;
 
 namespace MediaApp.Controllers
 {
@@ -159,7 +152,7 @@ namespace MediaApp.Controllers
             var username = User.GetUsername();
             AppUser user = await userService.GetUserbyUsernameAsync(username);
 
-            Photo photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+            Photo? photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
 
             if (photo == null)
             {
@@ -186,8 +179,7 @@ namespace MediaApp.Controllers
             {
                 return Ok();
             }
-               
-            
+                        
             return BadRequest("Failed to delete the photo.");
         }
 

@@ -1,7 +1,7 @@
 ﻿using F23.Kernel;
 using Helpers.Helpers;
 
-namespace UseCases.GetMembers
+namespace UseCases.Member.GetMembers
 {
     public class GetMembersQuery: IQuery<GetMembersQueryResult>
     {

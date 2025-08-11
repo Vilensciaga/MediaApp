@@ -2,7 +2,7 @@
 using F23.Kernel;
 using F23.Kernel.Results;
 
-namespace UseCases.GetMembers
+namespace UseCases.Member.GetMembers
 {
     public class GetMembersQueryHandler(IUserRepository userRepository, IValidator<GetMembersQuery> validator) :
         IQueryHandler<GetMembersQuery, GetMembersQueryResult>
@@ -27,7 +27,8 @@ namespace UseCases.GetMembers
 
             if (members is null)
             {
-                return  Result<GetMembersQueryResult>.PreconditionFailed(PreconditionFailedReason.NotFound);
+                return  Result<GetMembersQueryResult>
+                    .PreconditionFailed(PreconditionFailedReason.NotFound);
             }
 
             var result = new GetMembersQueryResult

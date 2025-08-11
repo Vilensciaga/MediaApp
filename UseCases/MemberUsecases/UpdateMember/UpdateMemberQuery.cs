@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UseCases.UpdateMember
+namespace UseCases.Member.UpdateMember
 {
     public class UpdateMemberQuery:IQuery<UpdateMemberQueryResult>
     {

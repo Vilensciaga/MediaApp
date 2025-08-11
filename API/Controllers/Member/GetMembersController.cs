@@ -5,7 +5,7 @@ using Helpers.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Dtos.User;
-using UseCases.GetMembers;
+using UseCases.Member.GetMembers;
 
 namespace API.Controllers.Member
 {

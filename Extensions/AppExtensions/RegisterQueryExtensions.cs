@@ -1,8 +1,10 @@
 ﻿using F23.Kernel;
 using Microsoft.Extensions.DependencyInjection;
-using UseCases.GetMember;
-using UseCases.GetMembers;
-using UseCases.UpdateMember;
+using UseCases.MemberUsecases.GetMember;
+using UseCases.Member.GetMembers;
+using UseCases.Member.UpdateMember;
+using UseCases.PhotoUsecases.AddPhoto;
+using UseCases.PhotoUsecases.DeletePhoto;
 
 namespace Extensions.AppExtensions
 {
@@ -13,6 +15,9 @@ namespace Extensions.AppExtensions
             services.RegisterQueryHandler<GetMemberQuery, GetMemberQueryResult, GetMemberQueryHandler>();
             services.RegisterQueryHandler<GetMembersQuery, GetMembersQueryResult, GetMembersQueryHandler>();
             services.RegisterQueryHandler<UpdateMemberQuery, UpdateMemberQueryResult, UpdateMemberQueryHandler>();
+            services.RegisterQueryHandler<AddPhotoQuery, AddPhotoQueryResult, AddPhotoQueryHandler>();
+            services.RegisterQueryHandler<DeletePhotoQuery, DeletePhotoQueryResult, DeletePhotoQueryHandler>();
+
 
 
             return services;

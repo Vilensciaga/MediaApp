@@ -79,7 +79,7 @@ deletePhoto(photoId:number)
     
     this.uploader = new MyUploader(
       {
-        url: this.baseUrl + 'user/add-photo',
+        url: this.baseUrl + 'addphoto',
         authToken: 'Bearer ' + token,
         isHTML5: true,
         allowedFileType: ['image'],

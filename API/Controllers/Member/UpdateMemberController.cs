@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Dtos.User;
-using UseCases.UpdateMember;
+using UseCases.Member.UpdateMember;
 
 namespace API.Controllers.Member
 {

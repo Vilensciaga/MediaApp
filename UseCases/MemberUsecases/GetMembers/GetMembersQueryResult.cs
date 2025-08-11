@@ -1,7 +1,7 @@
 ﻿using Helpers.Helpers.PageList;
 using Models.Dtos.User;
 
-namespace UseCases.GetMembers
+namespace UseCases.Member.GetMembers
 {
     public class GetMembersQueryResult
     {

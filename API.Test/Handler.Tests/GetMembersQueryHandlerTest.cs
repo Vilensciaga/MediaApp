@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UseCases.GetMembers;
+using UseCases.Member.GetMembers;
 
 namespace API.Test.Handler.Tests
 {
