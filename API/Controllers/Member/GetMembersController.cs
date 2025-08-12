@@ -29,6 +29,17 @@ namespace API.Controllers.Member
 
             var result = await queryHandler.Handle(query);
 
+            var pagination = result.Map(r => r.Members);
+            
+            //var CurrentPage = Convert.ToInt32(pagination.Map(r => r.CurrentPage).ToString());
+            //var PageSize = Convert.ToInt32(pagination.Map(r => r.PageSize).ToString());
+            //var TotalCount = Convert.ToInt32(pagination.Map(r => r.TotalCount).ToString());
+            //var TotalPages = Convert.ToInt32(pagination.Map(r => r.TotalPages).ToString());
+
+
+            //Response.AddPaginationHeader(CurrentPage, PageSize, TotalCount, TotalPages);
+
+
             return result.ToActionResult();
         }
     }

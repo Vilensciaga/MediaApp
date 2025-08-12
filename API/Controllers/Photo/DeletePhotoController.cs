@@ -24,6 +24,11 @@ namespace API.Controllers.Photo
 
             var result = await queryHandler.Handle(query);
 
+            if(result.IsSuccess)
+            {
+                return result.ToActionResult(r => Ok());
+            }
+
             return result.ToActionResult();
         }
 
