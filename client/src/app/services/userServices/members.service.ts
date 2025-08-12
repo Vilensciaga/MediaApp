@@ -43,7 +43,7 @@ export class MembersService {
 
 setMainPhoto(photoId:number)
 {
-  return this.http.put(this.baseUrl + 'user/set-main-photo/' + photoId, {});
+  return this.http.put(this.baseUrl + 'setmainphoto/' + photoId, {});
 }
 
 deletePhoto(photoId:number)
@@ -61,7 +61,7 @@ getMembers(userParams:UserParams)
 
     //observe make this return the whole response rather than the respose body,
     //so we need to grab the body
-    return this.getPaginatedResult<Member[]>(this.baseUrl + 'getMembers', params)
+    return this.getPaginatedResult<Member[]>(this.baseUrl + 'user', params)
   }
 
   private getPaginationHeaders(pageNumber: number, pageSize:number)

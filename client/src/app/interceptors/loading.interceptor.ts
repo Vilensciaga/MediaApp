@@ -10,7 +10,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
 spinnerService.spinnerCounter();
   return next(req).pipe(
 
-    delay(1000),
+    delay(700),
     finalize(()=>{
       spinnerService.idle();
     })

@@ -20,7 +20,8 @@ namespace UseCases.PhotoUsecases.DeletePhoto
         {
             if( await validator.Validate(query, cancellationToken) is ValidationFailedResult failed)
             {
-                return Result<DeletePhotoQueryResult>.ValidationFailed(failed.Errors);
+                return Result<DeletePhotoQueryResult>
+                    .ValidationFailed(failed.Errors);
             }
 
             var user = await userRepository.GetUserbyUsernameAsync(query.Username);
@@ -46,8 +47,11 @@ namespace UseCases.PhotoUsecases.DeletePhoto
                 var result = await photoService.DeletePhotoAsync(photo.PublicId);
                 if (result.Error != null)
                 {
+                    var noPublicId = new ValidationFailedResult(
+                    [new("ErrorMessage", result.Error.Message)]);
+
                     return Result<DeletePhotoQueryResult>
-                        .PreconditionFailed(PreconditionFailedReason.Conflict, result.Error.Message);
+                        .ValidationFailed(noPublicId.Errors);
                 }
             }
 

@@ -34,7 +34,7 @@ namespace MediaApp.Controllers
 
             if(registerDto == null)
             {
-                return BadRequest("Field cannot be null");
+                return BadRequest("Fields cannot be null");
             }
 
             bool userExists = await userService.UserExistsAsync(registerDto.Username);
@@ -65,7 +65,7 @@ namespace MediaApp.Controllers
         {
             if(user == null)
             {
-                return BadRequest("Please enter UserName and Password");
+                return BadRequest("Please enter UserName and Password.");
             }
 
 
@@ -80,7 +80,7 @@ namespace MediaApp.Controllers
 
             if(token == null)
             {
-                return Unauthorized("Invalid Username or Password.");
+                return Unauthorized("Invalid username or Password.");
             }
 
             UserDto dto = new UserDto

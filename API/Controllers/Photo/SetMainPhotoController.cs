@@ -4,26 +4,22 @@ using F23.Kernel.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Models.Dtos.User;
-using UseCases.Member.UpdateMember;
+using UseCases.PhotoUsecases.SetMainPhoto;
 
-namespace API.Controllers.Member
+namespace API.Controllers.Photo
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class UpdateMemberController(IQueryHandler<UpdateMemberQuery, UpdateMemberQueryResult> queryHandler) : ControllerBase
+    public class SetMainPhotoController(IQueryHandler<SetMainPhotoQuery, SetMainPhotoQueryResult> queryHandler) : ControllerBase
     {
-
-        [HttpPut]
-        public async Task<IActionResult> UpdateMemberAsync([FromBody] UpdateMemberDto updateMemberDto)
+        [HttpPut("{photoId}")]
+        public async Task<IActionResult> SetMainPhotoAsync(int photoId)
         {
-            string username = User.GetUsername();
-
-            var query = new UpdateMemberQuery
+            var query = new SetMainPhotoQuery
             {
-                UserName = username,
-                MemberDto = updateMemberDto
+                UserName = User.GetUsername(),
+                PhotoId = photoId,
             };
 
             var result = await queryHandler.Handle(query);

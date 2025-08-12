@@ -25,7 +25,7 @@ constructor(private http:HttpClient)
 
 login(model:any)
 {
-  return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
+  return this.http.post<User>(this.baseUrl + 'login', model).pipe(
     map((response:User) =>{
       const user = response;
       if(user){
@@ -37,7 +37,7 @@ login(model:any)
 
 register(model: any)
 {
-return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+return this.http.post<User>(this.baseUrl + 'register', model).pipe(
   map((user:User )=> {
     if(user)
     {

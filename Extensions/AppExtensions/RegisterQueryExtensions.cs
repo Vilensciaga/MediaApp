@@ -5,6 +5,9 @@ using UseCases.Member.GetMembers;
 using UseCases.Member.UpdateMember;
 using UseCases.PhotoUsecases.AddPhoto;
 using UseCases.PhotoUsecases.DeletePhoto;
+using UseCases.PhotoUsecases.SetMainPhoto;
+using UseCases.LoginUsecases;
+using UseCases.RegisterUsecases.Register;
 
 namespace Extensions.AppExtensions
 {
@@ -17,6 +20,12 @@ namespace Extensions.AppExtensions
             services.RegisterQueryHandler<UpdateMemberQuery, UpdateMemberQueryResult, UpdateMemberQueryHandler>();
             services.RegisterQueryHandler<AddPhotoQuery, AddPhotoQueryResult, AddPhotoQueryHandler>();
             services.RegisterQueryHandler<DeletePhotoQuery, DeletePhotoQueryResult, DeletePhotoQueryHandler>();
+            services.RegisterQueryHandler<SetMainPhotoQuery, SetMainPhotoQueryResult, SetMainPhotoQueryHandler>();
+            services.RegisterQueryHandler<LoginQuery, LoginQueryResult, LoginQueryHandler>();
+            services.RegisterQueryHandler<RegisterQuery, RegisterQueryResult, RegisterQueryHandler>();
+
+
+
 
 
 

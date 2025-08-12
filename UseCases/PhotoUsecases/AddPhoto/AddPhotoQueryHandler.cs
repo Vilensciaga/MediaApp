@@ -23,7 +23,7 @@ namespace UseCases.PhotoUsecases.AddPhoto
             //Adding photo to cloudinary
             var photoResult = await photoService.AddPhotoAsync(query.File);
 
-            if(photoResult.Error != null)
+            if(photoResult.Error is not null)
             {
                 var failedToAdd = new ValidationFailedResult(
                 [ new("ErrorMessage", photoResult.Error.Message)]);
