@@ -1,6 +1,8 @@
 ﻿using Extensions.AppExtensions;
 using F23.Kernel;
 using F23.Kernel.AspNetCore;
+using F23.Kernel.Results;
+using FluentValidation.TestHelper;
 using Helpers.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +19,7 @@ namespace API.Controllers.Member
     {
 
         [HttpGet]
-        public async Task<IActionResult> GetMembersAsync([FromRoute] UserParams userParams)
+        public async Task<IActionResult> GetMembersAsync([FromQuery] UserParams userParams)
         {
             string username = User.GetUsername();
 
@@ -29,16 +31,16 @@ namespace API.Controllers.Member
 
             var result = await queryHandler.Handle(query);
 
-            var pagination = result.Map(r => r.Members);
-            
-            //var CurrentPage = Convert.ToInt32(pagination.Map(r => r.CurrentPage).ToString());
-            //var PageSize = Convert.ToInt32(pagination.Map(r => r.PageSize).ToString());
-            //var TotalCount = Convert.ToInt32(pagination.Map(r => r.TotalCount).ToString());
-            //var TotalPages = Convert.ToInt32(pagination.Map(r => r.TotalPages).ToString());
+            if (result is SuccessResult<GetMembersQueryResult> successResult)
+            {
+                var resultValue = successResult.Value;
+                var pagination = resultValue.Members;
 
+                Response.AddPaginationHeader(pagination.CurrentPage, pagination.PageSize,
+                    pagination.TotalCount, pagination.TotalPages);
 
-            //Response.AddPaginationHeader(CurrentPage, PageSize, TotalCount, TotalPages);
-
+                return result.ToActionResult(r => Ok(resultValue.Members));
+            }
 
             return result.ToActionResult();
         }

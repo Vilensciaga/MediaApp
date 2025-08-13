@@ -23,6 +23,8 @@ function unwrap(body: any): any {
     // 1) Unwrap "content" if present, ex { "content": { "profile": { "username": "bob" } } } 
     let payload = ('content' in body) ? body.content : body;
 
+    if (Array.isArray(payload)) return payload;
+
     // unwrapping furter passed content and just returning the inner object if there is 1 key inside the object
     if (payload && typeof payload === 'object') {
       const keys = Object.keys(payload);

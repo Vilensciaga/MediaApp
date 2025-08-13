@@ -30,7 +30,7 @@ namespace UseCases.Member.GetMembers
                 return  Result<GetMembersQueryResult>
                     .PreconditionFailed(PreconditionFailedReason.NotFound);
             }
-
+           
             var result = new GetMembersQueryResult
             {
                 Members = members,
