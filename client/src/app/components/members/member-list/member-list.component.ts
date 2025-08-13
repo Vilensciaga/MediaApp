@@ -66,6 +66,7 @@ export class MemberListComponent implements OnInit{
   pageChanged(page:number)
   {
     this.userParams.pageNumber = page;
+    console.log(page);
     this.loadMembers();
   }
 
